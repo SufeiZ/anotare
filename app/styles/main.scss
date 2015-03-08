@@ -26,14 +26,30 @@ body {
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
-
+  margin: 0 8%;
+  //  border-bottom: 1px solid #e5e5e5;
+  position: fixed;
+  left: 0;
+  right: 0;
   /* Make the masthead heading the same height as the navigation */
   h3 {
     margin-top: 0;
     margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
+    line-height: 25px;
+    padding-bottom: 15px;
+    color:#333333;
+    font-size: 30px;
+  }
+  ul{
+    padding-right: 1%;
+    margin-top: -5px;
+    a{
+      border: 1px solid white;
+    }
+  }
+
+  a{
+    color: black;
   }
 }
 
@@ -41,7 +57,7 @@ body {
 .footer {
   padding-top: 19px;
   color: #777;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px dashed #e5e5e5;
 }
 
 .container-narrow > hr {
@@ -52,10 +68,31 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
-
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
+  padding-bottom: 80px;
+  margin-top: 5%;
+  h1{
+    margin-top: 10px;
+  }
+  form {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    input{
+      height: 45px;
+      font-size:18px;
+      border-width: 0.5px;
+      background-color: rgb(250, 255, 189);
+    }
+    .btn {
+      padding:3px;
+//      margin-top: 20px;
+      width: 100%;
+      font-size: 21px;
+      background-color: #ffffff;
+    }
+    p{
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -71,7 +108,7 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 730px;
+    //    max-width: 730px;
   }
 
   /* Remove the padding we set earlier */
@@ -90,3 +127,5 @@ body {
     border-bottom: 0;
   }
 }
+
+//body > div > div.header > ul > li.active
