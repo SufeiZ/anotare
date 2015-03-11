@@ -13,21 +13,28 @@ angular
     'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.router'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+    .config(function($stateProvider, $urlRouterProvider) {
+  //
+  // For any unmatched url, redirect to /state1
+  $urlRouterProvider.otherwise('/main');
+  //
+  // Now set up the states
+  $stateProvider
+    .state('index', {
+      url: '/main',
+      templateUrl: 'views/main.html'//,
+      //controller: 'WelcomeCtrl'
+    })
+
+    .state('annotation', {
+      url: '/annotation',
+      templateUrl: 'views/annotation.html',
+      controller: 'AnnotationCtrl'
+    });
+
+});
+
