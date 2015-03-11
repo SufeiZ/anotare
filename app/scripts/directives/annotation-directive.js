@@ -38,7 +38,7 @@ angular.module('anotareApp')
                 bitmap.y = 100;
                 stage.addChild(bitmap);
                 bitmap.image.onload = function() { stage.update(); };
-                //stage.update();
+                stage.update();
             }
 
             var drawCircle = function( shape ){
@@ -48,22 +48,43 @@ angular.module('anotareApp')
               circle.x = shape.x;
               circle.y = shape.y;
               stage.addChild(circle);
-              stage.update();
-            }
+              // stage.update();
+              dragAndDrop(circle);
+            };
 
             var drawRect = function( shape ){
               var rect = new createjs.Shape();
               rect.graphics.beginStroke(createjs.Graphics.getRGB(100,0,0)).drawRect(shape.x, shape.y, shape.width, shape.height);
               stage.addChild(rect);
-              stage.update();
-            }
+              // stage.update();
+              dragAndDrop(rect);
+            };
 
             var drawEllipse = function( shape ){
               var ellipse = new createjs.Shape();
               ellipse.graphics.beginStroke(createjs.Graphics.getRGB(100,0,0)).drawEllipse(shape.x, shape.y, shape.width, shape.height);
               stage.addChild(ellipse);
-              stage.update();
-            }
+              // stage.update();
+              dragAndDrop(ellipse);
+            };
+
+            var drawPin = function( shape ){
+              var pin = new createjs.Shape();
+              pin.graphics.beginFill("Yellow").drawCircle(0, 0, 5);
+              pin.x = shape.x;
+              pin.y = shape.y;
+              stage.addChild(pin);
+              dragAndDrop(pin);
+            };
+
+            var dragAndDrop = function( shape ){
+              shape.on("pressmove", function(evt) {
+                  evt.target.x = evt.stageX;
+                  evt.target.y = evt.stageY;
+                  stage.update();
+              });
+              shape.on("pressup", function(evt) { console.log("up"); })
+            };
 
 
             var drawAnnotations = function( annotations ){
