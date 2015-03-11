@@ -43,34 +43,42 @@ angular.module('anotareApp')
 
             var drawCircle = function( shape ){
               var circle = new createjs.Shape();
-              //circle.setStrokeStyle(1);
-              circle.graphics.beginStroke(createjs.Graphics.getRGB(100,0,0)).drawCircle(0, 0, shape.radius);
+              circle.graphics.beginFill(createjs.Graphics.getRGB("white", 0.01));
+              circle.graphics.setStrokeStyle(2).beginStroke("red");
+              circle.graphics.drawCircle(0, 0, shape.radius);
               circle.x = shape.x;
               circle.y = shape.y;
               stage.addChild(circle);
-              // stage.update();
               dragAndDrop(circle);
             };
 
             var drawRect = function( shape ){
               var rect = new createjs.Shape();
-              rect.graphics.beginStroke(createjs.Graphics.getRGB(100,0,0)).drawRect(shape.x, shape.y, shape.width, shape.height);
+              rect.graphics.beginFill(createjs.Graphics.getRGB("white", 0.01));
+              rect.graphics.setStrokeStyle(2).beginStroke("red");
+              rect.graphics.drawRect(0, 0, shape.width, shape.height);
+              rect.x = shape.x;
+              rect.y = shape.y;
               stage.addChild(rect);
-              // stage.update();
               dragAndDrop(rect);
             };
 
             var drawEllipse = function( shape ){
               var ellipse = new createjs.Shape();
-              ellipse.graphics.beginStroke(createjs.Graphics.getRGB(100,0,0)).drawEllipse(shape.x, shape.y, shape.width, shape.height);
+              ellipse.graphics.beginFill(createjs.Graphics.getRGB("white", 0.01));
+              ellipse.graphics.setStrokeStyle(2).beginStroke("red");
+              ellipse.graphics.drawEllipse(0, 0, shape.width, shape.height);
+              ellipse.x = shape.x;
+              ellipse.y = shape.y;
+              console.log("ellipse!!");
               stage.addChild(ellipse);
-              // stage.update();
               dragAndDrop(ellipse);
             };
 
             var drawPin = function( shape ){
               var pin = new createjs.Shape();
-              pin.graphics.beginFill("Yellow").drawCircle(0, 0, 5);
+              pin.graphics.beginFill("Yellow");
+              pin.graphics.drawCircle(0, 0, 5);
               pin.x = shape.x;
               pin.y = shape.y;
               stage.addChild(pin);
@@ -95,8 +103,11 @@ angular.module('anotareApp')
                 else if (annotation.type === 'rectangle'){
                   drawRect(annotation);
                 }
-                else if (annotation.type === 'ellipse'){
+                else if (annotation.type === 'ellipse'){                  
                   drawEllipse(annotation);
+                }
+                else if(annotation.type === 'pin'){
+                  drawPin(annotation);
                 }
                 else{
                   console.log('shape' + annotation.type + 'is unidentified');
@@ -111,6 +122,7 @@ angular.module('anotareApp')
             init();
             drawImage(image);
             drawAnnotations(image.annotations);
+            // drawPin();
         }
     };
 });
