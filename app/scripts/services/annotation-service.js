@@ -13,8 +13,8 @@ angular.module('anotareApp')
             annotations:[
             				{
             					type:'circle',
-            					x: '100',
-            					y: '100',
+            					x: '350',
+            					y: '300',
             					radius: '30'
             				},
             				{
@@ -28,15 +28,20 @@ angular.module('anotareApp')
             					type:'ellipse',
             					x: '170',
             					y: '200',
-            					height: '10',
-            					width: '5'
+            					height: '30',
+            					width: '15'
             				},
             				{
             					type:'circle',
-            					x: '50',
-            					y: '100',
+            					x: '200',
+            					y: '400',
             					radius: '60'
-            				}
+            				},
+                            {
+                                type:'pin',
+                                x: '300',
+                                y: '300'
+                            }
             			]
         }
     ];
