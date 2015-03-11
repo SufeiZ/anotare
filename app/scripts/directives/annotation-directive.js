@@ -9,7 +9,7 @@ angular.module('anotareApp')
     return {
         restrict : 'E',
         replace : true,
-        template :  "<canvas id='main-canvas' width='960' height='400'>" + 
+        template :  "<canvas id='main-canvas' width='960' height='800'>" + 
                         // "{{drawImage(artwork.image)}}" +
                         // "<div ng-repeat = 'annotation in artwork.annotations'>" +
                         //     "{{drawAnnotation(annotation)}}" +
@@ -32,7 +32,32 @@ angular.module('anotareApp')
             }
 
             var drawImage = function( image ){
+                var bitmap = new createjs.Bitmap(image.src);
+                bitmap.x = 100;
+                bitmap.y = 100;
+                stage.addChild(bitmap);
+                bitmap.image.onload = function() { stage.update(); };
+                //stage.update();
+            }
 
+            var drawCircle = function( shape ){
+              var circle = new createjs.Shape();
+              circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
+              circle.x = 100;
+              circle.y = 100;
+              stage.addChild(circle);
+              stage.update();
+                   //TODO: draw image
+
+            }
+
+            var drawSquare = function( image ){
+              var circle = new createjs.Shape();
+              circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
+              circle.x = 100;
+              circle.y = 100;
+              stage.addChild(circle);
+              stage.update();
                    //TODO: draw image
 
             }
@@ -47,6 +72,7 @@ angular.module('anotareApp')
                    //TODO: draw image
 
             }
+
 
             var drawAnnotation = function( annotation ){
                 var liveShape = annotation.shape;
@@ -72,7 +98,7 @@ angular.module('anotareApp')
             }
 
             init();
-            drawCircle();
+            drawImage();
         }
     };
 });
