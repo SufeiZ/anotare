@@ -4,24 +4,24 @@
  * @name anotare.directive:display-annotation
  */
  
-angular.module('anotareApp')
-  .directive('displayAnnotation', function () {
-    return {
-        restrict : 'E',
-        replace : true,
-        template :  "<canvas id='main-canvas' width='960' height='800'>" + 
+ angular.module('anotareApp')
+ .directive('displayAnnotation', function () {
+  return {
+    restrict : 'E',
+    replace : true,
+    template :  "<canvas id='main-canvas' width='960' height='800'>" + 
                         // "{{drawImage(artwork.image)}}" +
                         // "<div ng-repeat = 'annotation in artwork.annotations'>" +
                         //     "{{drawAnnotation(annotation)}}" +
                         // "</div>" +
-                    "</canvas>",
+                        "</canvas>",
                     //"<div id=annotation-text> /*push the text from the corresponding focused shape here*/ </div>",
-        link: function(scope, element, attribute) {
-            var w, h, stage, canvas;
+                    link: function(scope, element, attribute) {
+                      var w, h, stage, canvas;
 
-            var init = function() {
-                canvas = document.getElementById("main-canvas");
-                stage = new createjs.Stage(canvas);
+                      var init = function() {
+                        canvas = document.getElementById("main-canvas");
+                        stage = new createjs.Stage(canvas);
 
                 // enable touch interactions if supported on the current device:
                 //createjs.Touch.enable(stage);
@@ -29,76 +29,89 @@ angular.module('anotareApp')
                 // enabled mouse over / out events
                 //stage.enableMouseOver(10);
                 //stage.mouseMoveOutside = true; // keep tracking the mouse even when it leaves the canvas
-            }
+              };
 
-            var drawImage = function( image ){
-                var bitmap = new createjs.Bitmap(image.src);
+              var drawImage = function( image ){
+                var bitmap = new createjs.Bitmap("images/picasso.jpg");
                 bitmap.x = 100;
                 bitmap.y = 100;
                 stage.addChild(bitmap);
                 bitmap.image.onload = function() { stage.update(); };
                 //stage.update();
-            }
+              };
 
-            var drawCircle = function( shape ){
-              var circle = new createjs.Shape();
-              circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-              circle.x = 100;
-              circle.y = 100;
-              stage.addChild(circle);
-              stage.update();
+              var drawCircle = function( shape ){
+                var circle = new createjs.Shape();                
+                circle.graphics.setStrokeStyle(2);
+                circle.graphics.beginStroke("Red");
+                circle.graphics.drawCircle(0, 0, 50);
+                circle.x = 100;
+                circle.y = 100;
+
+                stage.addChild(circle);
+                dragAndDrop(circle);
                    //TODO: draw image
 
-            }
+                 };
 
-            var drawSquare = function( image ){
-              var circle = new createjs.Shape();
-              circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-              circle.x = 100;
-              circle.y = 100;
-              stage.addChild(circle);
-              stage.update();
+                 var drawSquare = function( image ){
+                  var square = new createjs.Shape();
+                  square.graphics.beginFill("DeepSkyBlue").drawRect(20, 20, 120, 120);
+                  square.x = 100;
+                  square.y = 100;
+                  stage.addChild(square);
+                  dragAndDrop(square);
                    //TODO: draw image
 
-            }
+                 };
 
-            var drawCircle = function( image ){
-              var circle = new createjs.Shape();
-              circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-              circle.x = 100;
-              circle.y = 100;
-              stage.addChild(circle);
-              stage.update();
-                   //TODO: draw image
+                 var drawPinPoint = function( image ){
+                  var circle = new createjs.Shape();
+                  circle.graphics.beginFill("Yellow").drawCircle(0, 0, 5);
+                  circle.x = 300;
+                  circle.y = 300;
 
-            }
+                  stage.addChild(circle);
+                  dragAndDrop(circle);
+                };
+
+                var dragAndDrop = function(shape){
+                  shape.on("pressmove", function(evt) {
+                    evt.target.x = evt.stageX;
+                    evt.target.y = evt.stageY;
+                    stage.update();
+                  })
+                };
 
 
-            var drawAnnotation = function( annotation ){
-                var liveShape = annotation.shape;
-                if (scope.stage) {
-                       scope.stage.autoClear = true;
-                       scope.stage.removeAllChildren();
-                       scope.stage.update();
-                   } else {
-                       scope.stage = new createjs.Stage(element[0]);
-                   }
-                   w = scope.stage.canvas.width;
-                   h = scope.stage.canvas.height;
+                var drawAnnotation = function( annotation ){
+                  var liveShape = annotation.shape;
+                  if (scope.stage) {
+                   scope.stage.autoClear = true;
+                   scope.stage.removeAllChildren();
+                   scope.stage.update();
+                 } else {
+                   scope.stage = new createjs.Stage(element[0]);
+                 }
+                 w = scope.stage.canvas.width;
+                 h = scope.stage.canvas.height;
 
                    //TODO: draw liveShape
 
                    liveShape.on("click", function() {
-                        showText(annotation.text);
-                    });
-            }
+                    showText(annotation.text);
+                  });
+                 };
 
-            var showText = function (text){
-                document.getElementById('annotation-text').innerHTML = text;
-            }
+                 var showText = function (text){
+                  document.getElementById('annotation-text').innerHTML = text;
+                };
 
-            init();
-            drawImage();
-        }
-    };
-});
+                init();
+                drawImage();
+                drawSquare();
+                drawCircle();
+                drawPinPoint();
+              }
+            };
+          });
