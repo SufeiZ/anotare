@@ -17,7 +17,8 @@ angular.module('anotareApp')
                     "</canvas>",
                     //"<div id=annotation-text> /*push the text from the corresponding focused shape here*/ </div>",
         link: function(scope, element, attribute) {
-            var w, h, stage, canvas;
+            var stage, canvas;
+            var image = scope.image;
 
             var init = function() {
                 canvas = document.getElementById("main-canvas");
@@ -42,55 +43,44 @@ angular.module('anotareApp')
 
             var drawCircle = function( shape ){
               var circle = new createjs.Shape();
-              circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-              circle.x = 100;
-              circle.y = 100;
+              //circle.setStrokeStyle(1);
+              circle.graphics.beginStroke(createjs.Graphics.getRGB(100,0,0)).drawCircle(0, 0, shape.radius);
+              circle.x = shape.x;
+              circle.y = shape.y;
               stage.addChild(circle);
               stage.update();
-                   //TODO: draw image
-
             }
 
-            var drawSquare = function( image ){
-              var circle = new createjs.Shape();
-              circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-              circle.x = 100;
-              circle.y = 100;
-              stage.addChild(circle);
+            var drawRect = function( shape ){
+              var rect = new createjs.Shape();
+              rect.graphics.beginStroke(createjs.Graphics.getRGB(100,0,0)).drawRect(shape.x, shape.y, shape.width, shape.height);
+              stage.addChild(rect);
               stage.update();
-                   //TODO: draw image
-
             }
 
-            var drawCircle = function( image ){
-              var circle = new createjs.Shape();
-              circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-              circle.x = 100;
-              circle.y = 100;
-              stage.addChild(circle);
+            var drawEllipse = function( shape ){
+              var ellipse = new createjs.Shape();
+              ellipse.graphics.beginStroke(createjs.Graphics.getRGB(100,0,0)).drawEllipse(shape.x, shape.y, shape.width, shape.height);
+              stage.addChild(ellipse);
               stage.update();
-                   //TODO: draw image
-
             }
 
 
-            var drawAnnotation = function( annotation ){
-                var liveShape = annotation.shape;
-                if (scope.stage) {
-                       scope.stage.autoClear = true;
-                       scope.stage.removeAllChildren();
-                       scope.stage.update();
-                   } else {
-                       scope.stage = new createjs.Stage(element[0]);
-                   }
-                   w = scope.stage.canvas.width;
-                   h = scope.stage.canvas.height;
-
-                   //TODO: draw liveShape
-
-                   liveShape.on("click", function() {
-                        showText(annotation.text);
-                    });
+            var drawAnnotations = function( annotations ){
+              annotations.forEach(function(annotation){
+                if (annotation.type === 'circle'){
+                  drawCircle(annotation);
+                }
+                else if (annotation.type === 'rectangle'){
+                  drawRect(annotation);
+                }
+                else if (annotation.type === 'ellipse'){
+                  drawEllipse(annotation);
+                }
+                else{
+                  console.log('shape' + annotation.type + 'is unidentified');
+                }
+              });
             }
 
             var showText = function (text){
@@ -98,7 +88,8 @@ angular.module('anotareApp')
             }
 
             init();
-            drawImage();
+            drawImage(image);
+            drawAnnotations(image.annotations);
         }
     };
 });
