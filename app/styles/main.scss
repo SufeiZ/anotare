@@ -105,6 +105,29 @@ body {
   }
 }
 
+#rightMenu{
+  font-family: Helvetica;
+  &.showMenu{
+    display: block;
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #918c91;
+//    box-shadow: 5px 5px 4px #888888;
+  }
+  &.hideMenu{
+    display: none;
+  }
+  ul{
+    list-style: none;
+    padding-left: 20px;
+    padding-right: 30px;
+    margin:3px 0;
+  }
+  li{
+    margin-bottom: 3px;
+  }
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
@@ -127,5 +150,6 @@ body {
     border-bottom: 0;
   }
 }
+
 
 //body > div > div.header > ul > li.active
