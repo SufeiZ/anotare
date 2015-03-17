@@ -15,7 +15,7 @@ angular.module('anotareApp')
             					type:'circle',
             					x: '350',
             					y: '300',
-            					radius: '30'
+            					radius: '300'
             				},
             				{
             					type:'rectangle',
