@@ -70,15 +70,10 @@ angular.module('anotareApp')
         //   stage.update();
         // }
 
-        var drawCircle = function( lala ){
-          // console.log(shape.radius);
-          // var x = shape.x;
-          // var y = shape.y;
-          // var radius = shape.radius;
-          var start = new paper.Point(lala.x, lala.y);
-          var circle = new paper.Path.Circle(start, lala.radius);
+        var drawCircle = function( shape ){
+          var circle = new paper.Path.Circle(new paper.Point(shape.x, shape.y), shape.radius);
           circle.strokeColor = 'red';
-          console.log(circle);
+          //console.log(circle);
           // circle.
           // circle.graphics.beginFill(createjs.Graphics.getRGB("white", 0.01));
           // circle.graphics.setStrokeStyle(2).beginStroke("red");
@@ -90,7 +85,9 @@ angular.module('anotareApp')
           // rightClick(circle);
         };
 
-        // var drawRect = function( shape ){
+        var drawRect = function( shape ){
+          var rect = new paper.Rectangle(shape.x, shape.y, shape.width, shape.height);
+          rect.strokeColor = 'red';
         //   var rect = new createjs.Shape();
         //   rect.graphics.beginFill(createjs.Graphics.getRGB("white", 0.01));
         //   rect.graphics.setStrokeStyle(2).beginStroke("red");
@@ -100,7 +97,7 @@ angular.module('anotareApp')
         //   stage.addChild(rect);
         //   dragAndDrop(rect);
         //   rightClick(rect);
-        // };
+        };
 
         // var drawEllipse = function( shape ){
         //   var ellipse = new createjs.Shape();
@@ -183,9 +180,9 @@ angular.module('anotareApp')
             if (annotation.type === 'circle'){
               drawCircle(annotation);
             }
-            // else if (annotation.type === 'rectangle'){
-            //   drawRect(annotation);
-            // }
+            else if (annotation.type === 'rectangle'){
+               drawRect(annotation);
+            }
             // else if (annotation.type === 'ellipse'){
             //   drawEllipse(annotation);
             // }
