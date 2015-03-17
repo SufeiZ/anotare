@@ -1,6 +1,7 @@
 node_modules
 .tmp
 .sass-cache
+**/.DS_Store
 <<<<<<< HEAD
 bower_components
 app/images/.DS_Store
