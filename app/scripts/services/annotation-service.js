@@ -10,7 +10,7 @@ angular.module('anotareApp')
         getImage: function() {
             return $http.get('data/data.json').
               success(function(data) {
-                console.log(data);
+                // console.log(data);
                 return data.Album;
               }).
               error(function(data, status) {

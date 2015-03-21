@@ -18,8 +18,7 @@ angular.module('anotareApp')
       link: function(scope, element, attribute, event) {
         var canvas, canvasWidth, canvasHeight;
         var editMode = false;
-        var image = scope.image;
-        console.log(image);
+        var image = scope.imageScope;
 
         scope.switchEditMode = function(){
           editMode = !editMode;
@@ -122,10 +121,32 @@ angular.module('anotareApp')
             }
           });
         };
+
+        var drawAll = function(image){
+          if (typeof image !== 'undefined') {
+            drawImage(image);
+            drawAnnotations(image.annotations);
+          }
+          // else {
+          //   console.log('Failed to draw the image, result is ' + image);
+          // }
+        };
+
+        scope.$watch('imageScope', function(newVal, oldVal) {
+            if (typeof newVal === 'undefined' || newVal.length <= 0)
+            {   
+                image = oldVal;
+            }
+            else
+            {  
+                image = newVal;
+                drawAll(image);
+            }
+        });
         
         init();
-        drawImage(image);
-        drawAnnotations(image.annotations);
+        scope.getImageAjax();
+        drawAll(image);
       }
     };
   });

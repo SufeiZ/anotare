@@ -10,15 +10,16 @@
 angular.module('anotareApp')
   .controller('AnnotationCtrl', function ($scope, $http, AlbumService) {
   	// $scope.album = AlbumService;
-    $scope.image={};
+    $scope.imageScope;
 
     // Call the async method and then do stuff with what is returned inside the function
-    $scope.updateImage = function() {
+    $scope.getImageAjax = function() {
       AlbumService.getImage()
         .then(
         //success function
         function (asyncImageData) {
-            $scope.image = asyncImageData;
+            // console.log(asyncImageData.data);
+            $scope.imageScope = asyncImageData.data.Album;
         },
         //error function
         function(result) {
@@ -26,7 +27,7 @@ angular.module('anotareApp')
         });
     };
 
-    $scope.updateImage();
+    // $scope.updateImage();
 
     // // We can also use $watch to keep an eye out for when $scope.avengers.cast gets populated
     // $scope.$watch('avengers.cast', function (cast) {
