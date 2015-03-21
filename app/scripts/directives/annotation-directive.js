@@ -44,12 +44,38 @@ angular.module('anotareApp')
           document.getElementById('annotation-text').innerHTML = text;
         };
 
-        var createFrame = function(shape,frame){
+        var createFrame = function(shape){
+          var frame = new paper.Path();
           frame.strokeColor = 'blue';
           frame.strokeWidth = .5;
           frame.closed = true;
-          frame.add(shape.bounds.topLeft, shape.bounds.topRight, 
-            shape.bounds.bottomRight, shape.bounds.bottomLeft);
+          frame.visible = false;
+          
+          var topLeft = new paper.Point(shape.bounds.topLeft.x-3, 
+            shape.bounds.topLeft.y-3);
+          var topRight = new paper.Point(shape.bounds.topRight.x+3,
+            shape.bounds.topRight.y-3);
+          var bottomRight = new paper.Point(shape.bounds.bottomRight.x+3,
+            shape.bounds.bottomRight.y+3);
+          var bottomLeft = new paper.Point(shape.bounds.bottomLeft.x-3,
+            shape.bounds.bottomLeft.y+3);
+
+          //TODO: display little rects
+          // var rectTopLeft = new paper.Rectangle({
+          //   width: 10,
+          //   height: 10,
+          //   strokeColor: 'blue',
+          //   strokeWidth: 1
+          // })
+          // rectTopLeft.center = topLeft;
+          // console.log(rectTopLeft);
+
+          frame.add(topLeft, topRight, bottomRight, bottomLeft);
+          return frame;
+        }
+
+        var showFrame = function(event){
+          this.children[1].visible = true;
         }
 
         var drawCircle = function( shape ){
@@ -62,10 +88,11 @@ angular.module('anotareApp')
             fillColor : new paper.Color(0,0,0,0)
           });
 
-          var circleFrame = new paper.Path();
-          createFrame(circle,circleFrame);
+          var circleFrame = createFrame(circle);
           var circleGroup = new paper.Group([circle,circleFrame]);
           circleGroup.onMouseDrag = mouseDrag;
+
+          circleGroup.onClick = showFrame;
 
           circle.onClick = function(){
             showText(shape.text);
@@ -84,12 +111,12 @@ angular.module('anotareApp')
             fillColor : new paper.Color(0,0,0,0)
           });
 
-          var rectFrame = new paper.Path();
-          createFrame(rect, rectFrame);
+          var rectFrame = createFrame(rect);
           var rectGroup = new paper.Group([rect,rectFrame]);
 
-
           rectGroup.onMouseDrag = mouseDrag;
+
+          rectGroup.onClick = showFrame;
           
           rect.onClick = function(){
             showText(shape.text);
@@ -105,7 +132,14 @@ angular.module('anotareApp')
             strokeColor: 'red',
             fillColor : new paper.Color(0,0,0,0)
           });
-          ellipse.onMouseDrag = mouseDrag;
+
+          var ellipseFrame = createFrame(ellipse);
+          var ellipseGroup = new paper.Group([ellipse,ellipseFrame]);
+
+          ellipseGroup.onMouseDrag = mouseDrag;
+
+          ellipseGroup.onClick = showFrame;
+          
           ellipse.onClick = function(){
             showText(shape.text);
           };
