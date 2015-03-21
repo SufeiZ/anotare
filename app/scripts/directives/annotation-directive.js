@@ -44,15 +44,29 @@ angular.module('anotareApp')
           document.getElementById('annotation-text').innerHTML = text;
         };
 
+        var createFrame = function(shape,frame){
+          frame.strokeColor = 'blue';
+          frame.strokeWidth = .5;
+          frame.closed = true;
+          frame.add(shape.bounds.topLeft, shape.bounds.topRight, 
+            shape.bounds.bottomRight, shape.bounds.bottomLeft);
+        }
+
         var drawCircle = function( shape ){
           var circle = new paper.Path.Circle({
             x: shape.x,
             y: shape.y,
             radius: shape.radius,
             strokeColor : 'red',
+            strokeWidth: 3,
             fillColor : new paper.Color(0,0,0,0)
           });
-          circle.onMouseDrag = mouseDrag;
+
+          var circleFrame = new paper.Path();
+          createFrame(circle,circleFrame);
+          var circleGroup = new paper.Group([circle,circleFrame]);
+          circleGroup.onMouseDrag = mouseDrag;
+
           circle.onClick = function(){
             showText(shape.text);
           };
@@ -66,9 +80,17 @@ angular.module('anotareApp')
             width: shape.width,
             height: shape.height,
             strokeColor : 'red',
+            strokeWidth: 3,
             fillColor : new paper.Color(0,0,0,0)
           });
-          rect.onMouseDrag = mouseDrag;
+
+          var rectFrame = new paper.Path();
+          createFrame(rect, rectFrame);
+          var rectGroup = new paper.Group([rect,rectFrame]);
+
+
+          rectGroup.onMouseDrag = mouseDrag;
+          
           rect.onClick = function(){
             showText(shape.text);
           };
