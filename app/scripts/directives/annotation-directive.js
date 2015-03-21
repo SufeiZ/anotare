@@ -19,6 +19,7 @@ angular.module('anotareApp')
         var canvas, canvasWidth, canvasHeight;
         var editMode = false;
         var image = scope.image;
+        console.log(image);
 
         scope.switchEditMode = function(){
           editMode = !editMode;
