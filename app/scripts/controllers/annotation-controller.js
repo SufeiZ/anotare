@@ -9,11 +9,10 @@
  */
 angular.module('anotareApp')
   .controller('AnnotationCtrl', function ($scope, $http, AlbumService) {
-  	// $scope.album = AlbumService;
     $scope.imageScope;
 
     // Call the async method and then do stuff with what is returned inside the function
-    $scope.getImageAjax = function() {
+    $scope.getImage = function() {
       AlbumService.getImage()
         .then(
         //success function
@@ -27,13 +26,4 @@ angular.module('anotareApp')
         });
     };
 
-    // $scope.updateImage();
-
-    // // We can also use $watch to keep an eye out for when $scope.avengers.cast gets populated
-    // $scope.$watch('avengers.cast', function (cast) {
-    //     // When $scope.avengers.cast has data, then run these functions
-    //     if (angular.isDefined(cast)) {          
-    //         $log.info("$scope.avengers.cast has data");
-    //     }
-    // });
   });

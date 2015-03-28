@@ -6,19 +6,19 @@
 
 angular.module('anotareApp')
   .factory('AlbumService', function ($http) {
+
+    //service to get json file from database
     var AlbumService = {
         getImage: function() {
-            return $http.get('data/data.json').
+            return $http.get('data/album.json').
               success(function(data) {
-                // console.log(data);
                 return data.Album;
               }).
               error(function(data, status) {
-                alert('Oh no! An error!' + status);
+                console.log('Oh no! An error! Error status: ' + status);
               });
         }
     }
 
-    // console.log(Album);
     return AlbumService;
 });
