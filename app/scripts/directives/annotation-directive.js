@@ -9,11 +9,13 @@ angular.module('anotareApp')
     return {
       restrict : 'E',
       replace : true,
-      template :"<div>" +  
+      template :"<div class='' id='annotation-body'>" +  
+                  "<div class='editing-menu'>" +
+                    "<a href='' ng-click='switchEditMode()'>edit mode: {{editMode ? 'on' : 'off'}}</a>" +  
+                  "</div>" +
                   "<canvas id='main-canvas' width='960' height='800'>" +
                   "</canvas>" +
                   "<div id='annotation-text'> </div>" +
-                  "<a href='' ng-click='switchEditMode()'>edit mode: {{editMode ? 'on' : 'off'}}</a>" +
                 "</div>",
       link: function(scope, element, attribute, event) {
         scope.editMode = false;
@@ -48,8 +50,10 @@ angular.module('anotareApp')
 
         var init = function() {
           canvas = document.getElementById("main-canvas");
+          canvas.setAttribute("width", screen.availWidth*.55);
+          canvas.setAttribute("height", screen.availHeight*.75);
+
           paper.setup(canvas);
-          var path = new paper.Path();
           //ajax http get method to get image object from database
           scope.getImage();
         }
@@ -72,8 +76,18 @@ angular.module('anotareApp')
         var drawImage = function( image ){
           var raster = new paper.Raster(image.src);
           raster.type = 'main-image';
+          raster.onLoad = resizeRaster;
           raster.position = paper.view.center;
-        }       
+        } 
+
+        //resize the image to max in the canvas
+        var resizeRaster = function(){
+          var height = this._size.height;
+          var width = this._size.width;
+          var scale = Math.max(height/canvas.height, width/canvas.width);
+          this.height = height / scale;
+          this.width = width / scale;
+        }
 
         //draw shapes on the image/Raster
         var drawAnnotations = function( annotations ){
@@ -105,11 +119,24 @@ angular.module('anotareApp')
             //only activated when editMode is true
             var mouseDragEffect = function(event, shape) {
               // return function(event){
-                if (scope.editMode){
+                if (scope.editMode && dragBound(event.point,shape)){
+                  // console.log(shape.frame);
                   shape.position = event.point;
                   shape.frame.position = event.point;
                 }
               // }
+            }
+
+            //prevent dragging shapes outside of the canvas
+            var dragBound = function(point,shape){
+              var halfHeight = shape.bounds.height/2;
+              var halfWidth = shape.bounds.width/2;
+
+              if(point.x < halfWidth || point.x > canvas.width - halfWidth || 
+                point.y < halfHeight || point.y > canvas.height - halfHeight)
+                return false;
+
+              return true;
             }
 
             //give an active effect when shape is cliced, show frame only when editMode is true
@@ -148,33 +175,26 @@ angular.module('anotareApp')
 
           //create frames around the shapes for editMode
           var drawFrameOn = function(shape){
-
-            var frame = new paper.Path();
-            frame.type = 'frame';
-            frame.style = styleFrame;
-            frame.closed = true;
-            frame.visible = false;
-            
+           
             var topLeft = new paper.Point(shape.bounds.topLeft.x-3, 
               shape.bounds.topLeft.y-3);
-            var topRight = new paper.Point(shape.bounds.topRight.x+3,
-              shape.bounds.topRight.y-3);
-            var bottomRight = new paper.Point(shape.bounds.bottomRight.x+3,
-              shape.bounds.bottomRight.y+3);
-            var bottomLeft = new paper.Point(shape.bounds.bottomLeft.x-3,
-              shape.bounds.bottomLeft.y+3);
+            var frameSize = new paper.Size(shape.bounds.width + 6, shape.bounds.height+6);
+            
+            var frame = new paper.Path.Rectangle(topLeft,frameSize);
+            frame.visible = false;
+            frame.type = 'frame';
+            frame.style = styleFrame;
 
             //TODO: display little rects
-            // var rectTopLeft = new paper.Rectangle({
+            // var rectTopLeft = new paper.Path.Rectangle({
             //   width: 10,
             //   height: 10,
             //   strokeColor: 'blue',
             //   strokeWidth: 1
             // })
-            // rectTopLeft.center = topLeft;
+            // rectTopLeft.center = shape.bounds.topLeft;
             // console.log(rectTopLeft);
 
-            frame.add(topLeft, topRight, bottomRight, bottomLeft);
             shape.frame = frame;
           };
           //end createFrame

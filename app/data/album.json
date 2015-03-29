@@ -1,6 +1,6 @@
 {
     "Album": {
-        "src": "images/picasso.jpg",
+        "src": "images/picasso1.jpg",
         "annotations":[
         				{
         					"type":"circle",
