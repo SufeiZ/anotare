@@ -4,39 +4,39 @@
         "annotations":[
         				{
         					"type":"circle",
-        					"x": 350,
-        					"y": 300,
-        					"radius": 30,
-                            "text": "this circle is small"
+        					"x": 210,
+        					"y": 110,
+        					"radius": 40,
+                            "text": "Facing away, shows ignorance"
         				},
         				{
         					"type":"rectangle",
-        					"x": 450,
-        					"y": 350,
-        					"height": 50,
-        					"width": 90,
-                            "text": "not a square"
+        					"x": 520,
+        					"y": 70,
+        					"height": 90,
+        					"width": 50,
+                            "text": "Represents a mask, African art's influence on Picasso's work"
         				},
         				{
         					"type":"ellipse",
-        					"x": 400,
-        					"y": 500,
-        					"height": 30,
-        					"width": 15,
-                            "text": "a circle, but long"
+        					"x": 370,
+        					"y": 490,
+        					"height": 130,
+        					"width": 90,
+                            "text": "a scything blade of melon with testicular grapes, an apple and a pear"
         				},
         				{
         					"type":"circle",
-        					"x": 600,
-        					"y": 470,
+        					"x": 520,
+        					"y": 250,
         					"radius": 60,
-                            "text": "this circle is big"
+                            "text": "Facing back and stares directly to the audience"
         				},
                         {
                             "type":"pin",
                             "x": 300,
-                            "y": 300,
-                            "text": "because sufei likes yellowwwwwww"
+                            "y": 130,
+                            "text": "Intimidating the audience by staring"
                         }
         			]
     }

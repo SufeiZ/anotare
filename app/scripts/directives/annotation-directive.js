@@ -13,7 +13,7 @@ angular.module('anotareApp')
                   "<div class='editing-menu'>" +
                     "<a href='' ng-click='switchEditMode()'>edit mode: {{editMode ? 'on' : 'off'}}</a>" +  
                   "</div>" +
-                  "<canvas id='main-canvas' width='960' height='800'>" +
+                  "<canvas id='main-canvas'>" +
                   "</canvas>" +
                   "<div id='annotation-text'> </div>" +
                 "</div>",
@@ -31,6 +31,11 @@ angular.module('anotareApp')
           strokeColor: new paper.Color(1,1,0,1),
           strokeWidth: 1.5,
           fillColor: new paper.Color(1,1,0,1)
+        };
+        var stylePin = {
+          strokeColor: new paper.Color(0.8,0.9),
+          strokeWidth: 1.5,
+          fillColor: new paper.Color(0.8,0.9)
         };
         var styleHover = {
           strokeColor: new paper.Color(0.7,0.1,0.1,1),
@@ -74,20 +79,23 @@ angular.module('anotareApp')
 
         //draw the image
         var drawImage = function( image ){
+
+          //resize the image to max in the canvas
+          var resizeRaster = function(){
+            var height = this._size.height;
+            var width = this._size.width;
+            var scale = Math.max(height/canvas.height, width/canvas.width);
+            this.height = height * scale;
+            this.width = width * scale;
+          }
+
           var raster = new paper.Raster(image.src);
           raster.type = 'main-image';
           raster.onLoad = resizeRaster;
           raster.position = paper.view.center;
         } 
 
-        //resize the image to max in the canvas
-        var resizeRaster = function(){
-          var height = this._size.height;
-          var width = this._size.width;
-          var scale = Math.max(height/canvas.height, width/canvas.width);
-          this.height = height / scale;
-          this.width = width / scale;
-        }
+        
 
         //draw shapes on the image/Raster
         var drawAnnotations = function( annotations ){
@@ -108,7 +116,7 @@ angular.module('anotareApp')
               $('html,body').css('cursor','default');
               if (!shape.active){
                 if (shape.type === 'pin') {
-                  shape.style = styleSufei;
+                  shape.style = stylePin;
                 }
                 else {
                   shape.style = styleStandard;
@@ -118,25 +126,24 @@ angular.module('anotareApp')
 
             //only activated when editMode is true
             var mouseDragEffect = function(event, shape) {
-              // return function(event){
-                if (scope.editMode && dragBound(event.point,shape)){
-                  // console.log(shape.frame);
-                  shape.position = event.point;
-                  shape.frame.position = event.point;
-                }
-              // }
-            }
 
-            //prevent dragging shapes outside of the canvas
-            var dragBound = function(point,shape){
-              var halfHeight = shape.bounds.height/2;
-              var halfWidth = shape.bounds.width/2;
+              //prevent dragging shapes outside of the canvas
+              var dragBound = function(point,shape){
+                var halfHeight = shape.bounds.height/2;
+                var halfWidth = shape.bounds.width/2;
 
-              if(point.x < halfWidth || point.x > canvas.width - halfWidth || 
-                point.y < halfHeight || point.y > canvas.height - halfHeight)
-                return false;
+                if(point.x < halfWidth || point.x > canvas.width - halfWidth || 
+                  point.y < halfHeight || point.y > canvas.height - halfHeight)
+                  return false;
 
-              return true;
+                return true;
+              }
+
+              if (scope.editMode && dragBound(event.point,shape)){
+                // console.log(shape.frame);
+                shape.position = event.point;
+                shape.frame.position = event.point;
+              }
             }
 
             //give an active effect when shape is cliced, show frame only when editMode is true
@@ -144,7 +151,7 @@ angular.module('anotareApp')
             var mouseClickEffect = function(shape) {
               if (typeof shapeLastClicked !== 'undefined' && shapeLastClicked !== shape ){
                 if (shapeLastClicked.type === 'pin') {
-                    shapeLastClicked.style = styleSufei;
+                    shapeLastClicked.style = stylePin;
                 }
                 else {
                   shapeLastClicked.style = styleStandard;
@@ -227,8 +234,8 @@ angular.module('anotareApp')
 
           var drawPin = function( shape ){
             var pin = new paper.Path.Circle({
-              radius: 4,
-              style: styleSufei,
+              radius: 3,
+              style: stylePin,
             });
             return pin;
           };

@@ -22,7 +22,7 @@ angular.module('anotareApp')
         },
         //error function
         function(result) {
-          console.log("Failed to get the image, result is " + result); 
+          console.log("Failed to get the image, result is " + result.toString()); 
         });
     };
 
