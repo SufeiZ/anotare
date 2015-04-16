@@ -49,8 +49,14 @@ angular.module('anotareApp')
         };
         var styleFrame = {
           strokeColor: new paper.Color(0,0,1,1),
-          strokeWidth: .5
-        }
+          strokeWidth: 1
+        };
+        var styleFrameSelector = {
+
+          fillColor: new paper.Color(0.2,0.2,0.8,1),
+          strokeColor: new paper.Color(1,1,1,1),
+          strokeWidth: 0.3
+        };
 
 
         var init = function() {
@@ -73,7 +79,7 @@ angular.module('anotareApp')
         scope.switchEditMode = function(){
           scope.editMode = !scope.editMode;
           if (typeof shapeLastClicked !== 'undefined') {
-            shapeLastClicked.frame.visible = !shapeLastClicked.frame.visible;
+            shapeLastClicked.frame.toggleVisibility(!shapeLastClicked.frame.visible);
           }
         }
 
@@ -142,7 +148,7 @@ angular.module('anotareApp')
               if (scope.editMode && dragBound(event.point,shape)){
                 // console.log(shape.frame);
                 shape.position = event.point;
-                shape.frame.position = event.point;
+                shape.frame.setFramePosition(event.point);
               }
             }
 
@@ -158,14 +164,14 @@ angular.module('anotareApp')
                 }
                 shapeLastClicked.active = false;
                 if (scope.editMode){
-                  shapeLastClicked.frame.visible = false;
+                  shapeLastClicked.frame.toggleVisibility(false);
                 }
               }
               shapeLastClicked = shape;
               shape.active = true;
               shape.style = styleActive;
               if (scope.editMode){
-                  shape.frame.visible = true;
+                  shape.frame.toggleVisibility(true);
               }
               //show the text corresponding to the shape
               document.getElementById('annotation-text').innerHTML = shape.text;
@@ -185,22 +191,112 @@ angular.module('anotareApp')
            
             var topLeft = new paper.Point(shape.bounds.topLeft.x-3, 
               shape.bounds.topLeft.y-3);
+            var topRight = new paper.Point(shape.bounds.topRight.x+3, 
+              shape.bounds.topRight.y-3);
+            var bottomLeft = new paper.Point(shape.bounds.bottomLeft.x-3, 
+              shape.bounds.bottomLeft.y+3);
+            var bottomRight = new paper.Point(shape.bounds.bottomRight.x+3, 
+              shape.bounds.bottomRight.y+3);
             var frameSize = new paper.Size(shape.bounds.width + 6, shape.bounds.height+6);
+
             
+
             var frame = new paper.Path.Rectangle(topLeft,frameSize);
-            frame.visible = false;
             frame.type = 'frame';
             frame.style = styleFrame;
+            frame.visible = false;
+            frame.rectTopLeft = new paper.Path.Rectangle({
+              width: 5,
+              height: 5,
+              style: styleFrameSelector,
+              position: topLeft,
+              visible:  false,
+              onMouseEnter: function(shape){
+                $('html,body').css('cursor','nwse-resize');
+              },
+              onMouseLeave: function(shape){
+                $('html,body').css('cursor','default');
+              },
+              onMouseDrag: function(event){
+                shape.bounds.setTopLeft(event.point.x+3, event.point.y+3);
+                shape.frame.bounds.setTopLeft(event.point);
+                shape.frame.rectTopLeft.setPosition(event.point);
+                shape.frame.rectTopRight.position.setY(event.point.y);
+                shape.frame.rectBottomLeft.position.setX(event.point.x);
+              }
+            });
+            frame.rectTopRight = new paper.Path.Rectangle({
+              width: 5,
+              height: 5,
+              style: styleFrameSelector,
+              position: topRight,
+              visible: false,
+              onMouseEnter: function(shape){
+                $('html,body').css('cursor','nesw-resize');
+              },
+              onMouseLeave: function(shape){
+                $('html,body').css('cursor','default');
+              },
+              onMouseDrag: function(event){
+                shape.bounds.setTopRight(event.point.x-3, event.point.y+3);
+                shape.frame.bounds.setTopRight(event.point);
+                shape.frame.rectTopRight.setPosition(event.point);
+                shape.frame.rectTopLeft.position.setY(event.point.y);
+                shape.frame.rectBottomRight.position.setX(event.point.x);
+              }
+            });
+            frame.rectBottomLeft = new paper.Path.Rectangle({
+              width: 5,
+              height: 5,
+              style: styleFrameSelector,
+              position: bottomLeft,
+              visible: false,
+              onMouseEnter: function(shape){
+                $('html,body').css('cursor','nesw-resize');
+              },
+              onMouseLeave: function(shape){
+                $('html,body').css('cursor','default');
+              },
+              onMouseDrag: function(event){
+                shape.bounds.setBottomLeft(event.point.x+3, event.point.y-3);
+                shape.frame.bounds.setBottomLeft(event.point);
+                shape.frame.rectBottomLeft.setPosition(event.point);
+                shape.frame.rectBottomRight.position.setY(event.point.y);
+                shape.frame.rectTopLeft.position.setX(event.point.x);
+              }
+            });
+            frame.rectBottomRight = new paper.Path.Rectangle({
+              width: 5,
+              height: 5,
+              style: styleFrameSelector,
+              position: bottomRight,
+              visible: false,
+              onMouseEnter: function(shape){
+                $('html,body').css('cursor','nwse-resize');
+              },
+              onMouseLeave: function(shape){
+                $('html,body').css('cursor','default');
+              },
+              onMouseDrag: function(event){
+                shape.bounds.setBottomRight(event.point.x-3, event.point.y-3);
+                shape.frame.bounds.setBottomRight(event.point);
+                shape.frame.rectBottomRight.setPosition(event.point);
+                shape.frame.rectBottomLeft.position.setY(event.point.y);
+                shape.frame.rectTopRight.position.setX(event.point.x);
+              }
+            });
+            frame.toggleVisibility = function (isVisible){
+              frame.visible = isVisible;
+              frame.rectTopLeft.visible = isVisible;
+              frame.rectTopRight.visible = isVisible;
+              frame.rectBottomRight.visible = isVisible;
+              frame.rectBottomLeft.visible = isVisible;
+            }
 
-            //TODO: display little rects
-            // var rectTopLeft = new paper.Path.Rectangle({
-            //   width: 10,
-            //   height: 10,
-            //   strokeColor: 'blue',
-            //   strokeWidth: 1
-            // })
-            // rectTopLeft.center = shape.bounds.topLeft;
-            // console.log(rectTopLeft);
+            frame.setFramePosition = function (point){
+              frame.position = point;
+
+            }
 
             shape.frame = frame;
           };
@@ -218,7 +314,7 @@ angular.module('anotareApp')
             var rect = new paper.Path.Rectangle({
               width: shape.width,
               height: shape.height,
-              style: styleStandard,
+              style: styleStandard
             });
             return rect;
           };
@@ -227,7 +323,7 @@ angular.module('anotareApp')
             var ellipse = new paper.Path.Ellipse({
               width: shape.width,
               height: shape.height,
-              style: styleStandard,
+              style: styleStandard
             });
             return ellipse;
           };
@@ -235,7 +331,7 @@ angular.module('anotareApp')
           var drawPin = function( shape ){
             var pin = new paper.Path.Circle({
               radius: 3,
-              style: stylePin,
+              style: stylePin
             });
             return pin;
           };
