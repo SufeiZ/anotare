@@ -18,14 +18,14 @@ angular.module('anotareApp')
                   "<div id='annotation-text'> </div>" +
                 "</div>",
       link: function(scope, element, attribute, event) {
-        // scope.editMode = false;
+        scope.editMode = false;
         var canvas, image, shapeLastClicked;
 
         //global styles to be used on the shapes
         var styleStandard = {
           strokeColor: new paper.Color(0.8,0.9),
           strokeWidth: 1.5,
-          fillColor: new paper.Color(0,0,0,0)
+          fillColor: new paper.Color(0,0,0,0.2)
         };
         var styleSufei = {
           strokeColor: new paper.Color(1,1,0,1),
@@ -40,7 +40,7 @@ angular.module('anotareApp')
         var styleHover = {
           strokeColor: new paper.Color(0.7,0.1,0.1,1),
           strokeWidth: 2.0,
-          fillColor: new paper.Color(0,0,0,0.1)
+          fillColor: new paper.Color(0,0,0,0)
         };
         var styleActive = {
           strokeColor: new paper.Color(0.9,0.1,0.1,1),
@@ -57,6 +57,8 @@ angular.module('anotareApp')
           strokeColor: new paper.Color(1,1,1,1),
           strokeWidth: 0.3
         };
+
+        
 
 
         var init = function() {
@@ -79,7 +81,13 @@ angular.module('anotareApp')
         scope.switchEditMode = function(){
           scope.editMode = !scope.editMode;
           if (typeof shapeLastClicked !== 'undefined') {
-            shapeLastClicked.frame.toggleVisibility(!shapeLastClicked.frame.visible);
+            if (scope.editMode) {
+              drawFrameOn(shapeLastClicked, 'makeNew');
+            }
+            else {
+              shapeLastClicked.removeSegments();
+              shapeLastClicked.frame.remove();
+            }
           }
         }
 
@@ -99,8 +107,159 @@ angular.module('anotareApp')
           raster.type = 'main-image';
           raster.onLoad = resizeRaster;
           raster.position = paper.view.center;
-        } 
+          raster.onClick = function(){
+            if (typeof shapeLastClicked !== 'undefined') {
+              shapeLastClicked.style = styleStandard;
+              shapeLastClicked.active = false;
+              if (shapeLastClicked.frame) {
+                shapeLastClicked.removeSegments();
+                shapeLastClicked.frame.remove();
+              }
+            }
+          }
+        }
 
+        var findAngle = function (centerPoint, rotatePoint, eventPoint ){
+          var findDistance = function(point1, point2){
+            return ( (point1.x-point2.x)*(point1.x-point2.x) + (point1.y-point2.y)*(point1.y-point2.y) );
+          }
+          var centerToRotate = findDistance(centerPoint, rotatePoint);
+          var centerToEvent = findDistance(centerPoint, eventPoint);
+          var rotateToEvent = findDistance(rotatePoint, eventPoint);
+
+          var angle = Math.acos((centerToRotate + centerToEvent - rotateToEvent)/ (2 * Math.sqrt(centerToRotate) * Math.sqrt(centerToEvent) ) ) * 180 / Math.PI;
+          return angle;
+          // if (eventPoint.x < rotatePoint.x t)
+        }
+
+        var drawFrameOn = function(shape, updateType){
+            // shape.bounds.selected = true; 
+            // console.log(shape.bounds);
+                    // console.log(b);
+            // b.selected = true;
+    
+            // selectionRectangle = new Path.Rectangle(b);
+            var drawPath = function(shape){
+              var b = shape.bounds.clone().expand(5,5);
+              shape.frame = new paper.Path.Rectangle(b);
+              shape.frame.strokeWidth = 1;
+              shape.frame.strokeColor = 'blue';
+              shape.frame.insert(2, new paper.Point(b.center.x, b.top));
+              shape.frame.insert(2, new paper.Point(b.center.x, b.top-15));
+              shape.frame.insert(2, new paper.Point(b.center.x, b.top));
+            }
+            // shape.frame.selected = true;
+            // shape.frame.topLeft.onMouseEnter = function() {
+            //   console.log("i am zero");
+            // };
+
+            var drawSegments = function(shape) {
+              shape.frame.bottomLeftSegment = new paper.Path.Rectangle({
+                x: shape.frame.segments[0].point.x - 2.5,
+                y: shape.frame.segments[0].point.y - 2.5,
+                width: 5,
+                height: 5,
+                fillColor: 'white',
+                strokeColor: 'blue',
+                strokeWidth: 1,
+                onMouseDrag : function(event){
+                  shape.bounds.setBottomLeft(event.point);
+                  drawFrameOn(shape, 'updateAll');
+                }
+              });
+              shape.frame.topLeftSegment = new paper.Path.Rectangle({
+                x: shape.frame.segments[1].point.x - 2.5,
+                y: shape.frame.segments[1].point.y - 2.5,
+                width: 5,
+                height: 5,
+                fillColor: 'white',
+                strokeColor: 'blue',
+                strokeWidth: 1,
+                onMouseDrag : function(event){
+                  shape.bounds.setTopLeft(event.point);
+                  drawFrameOn(shape, 'updateAll');
+                }
+              });
+              shape.frame.topRightSegment = new paper.Path.Rectangle({
+                x: shape.frame.segments[5].point.x - 2.5,
+                y: shape.frame.segments[5].point.y - 2.5,
+                width: 5,
+                height: 5,
+                fillColor: 'white',
+                strokeColor: 'blue',
+                strokeWidth: 1,
+                onMouseDrag : function(event){
+                  shape.bounds.setTopRight(event.point);
+                  drawFrameOn(shape, 'updateAll');
+                }
+              });
+              shape.frame.bottomRightSegment = new paper.Path.Rectangle({
+                x: shape.frame.segments[6].point.x - 2.5,
+                y: shape.frame.segments[6].point.y - 2.5,
+                width: 5,
+                height: 5,
+                fillColor: 'white',
+                strokeColor: 'blue',
+                strokeWidth: 1,
+                onMouseDrag : function(event){
+                  shape.bounds.setBottomRight(event.point);
+                  drawFrameOn(shape, 'updateAll');
+                }
+              });
+              // var rotateAngle = 0;
+              shape.frame.rotateSegment = new paper.Path.Rectangle({
+                x: shape.frame.segments[3].point.x - 2.5,
+                y: shape.frame.segments[3].point.y - 2.5,
+                width: 5,
+                height: 5,
+                fillColor: 'white',
+                strokeColor: 'blue',
+                strokeWidth: 1,
+                onMouseDrag : function(event){
+                  // console.log(shape.bounds.center);
+                  var rotateAngle=findAngle(shape.bounds.center, shape.frame.segments[3].point, event.point);
+                  // if (shape.frame.topRightSegment.x < shape.frame.top
+                  // console.log("drag");
+                  // console.log(rotateAngle);
+                  shape.rotate(rotateAngle);
+                  shape.frame.rotate(rotateAngle);
+
+                  drawFrameOn(shape, 'updateSegments');
+                  shape.frame.bottomRightSegment.rotate(rotateAngle);
+                  shape.frame.bottomLeftSegment.rotate(rotateAngle);
+                  shape.frame.topRightSegment.rotate(rotateAngle);
+                  shape.frame.topLeftSegment.rotate(rotateAngle);
+                  shape.frame.rotateSegment.rotate(rotateAngle);
+                },
+              });
+            }
+
+            var removeSegments = function (){
+              shape.frame.bottomLeftSegment.remove();
+              shape.frame.bottomRightSegment.remove();
+              shape.frame.topLeftSegment.remove();
+              shape.frame.topRightSegment.remove();
+              shape.frame.rotateSegment.remove();
+            }
+
+            shape.removeSegments = removeSegments;
+
+            if (updateType === 'makeNew'){
+              drawPath(shape);
+              drawSegments(shape);
+            }
+            else if (shape.frame && updateType === 'updateAll'){
+              removeSegments(shape);
+              shape.frame.remove();
+              drawPath(shape);
+              drawSegments(shape);
+            }
+            else if (shape.frame && updateType === 'updateSegments'){
+              removeSegments(shape);
+              drawSegments(shape);
+            }
+
+          };
         
 
         //draw shapes on the image/Raster
@@ -138,7 +297,7 @@ angular.module('anotareApp')
                 var halfHeight = shape.bounds.height/2;
                 var halfWidth = shape.bounds.width/2;
 
-                if(point.x < halfWidth || point.x > canvas.width - halfWidth || 
+                if(point.x < shape.bounds || point.x > canvas.width - halfWidth || 
                   point.y < halfHeight || point.y > canvas.height - halfHeight)
                   return false;
 
@@ -148,11 +307,12 @@ angular.module('anotareApp')
               if (scope.editMode && dragBound(event.point,shape)){
                 // console.log(shape.frame);
                 shape.position = event.point;
-                shape.frame.setFramePosition(event.point);
+                drawFrameOn(shape, 'updateAll');
+                // shape.frame.updateFramePosition();
               }
             }
 
-            //give an active effect when shape is cliced, show frame only when editMode is true
+            //give an active effect when shape is clicked, show frame only when editMode is true
             //shapeLastClicked is a 'global' variable to determine which shape was last clicked
             var mouseClickEffect = function(shape) {
               if (typeof shapeLastClicked !== 'undefined' && shapeLastClicked !== shape ){
@@ -164,15 +324,26 @@ angular.module('anotareApp')
                 }
                 shapeLastClicked.active = false;
                 if (scope.editMode){
-                  shapeLastClicked.frame.toggleVisibility(false);
+                  shapeLastClicked.removeSegments();
+                  shapeLastClicked.frame.remove();
+                  // shapeLastClicked.frame.toggleVisibility(false);
                 }
               }
               shapeLastClicked = shape;
-              shape.active = true;
-              shape.style = styleActive;
               if (scope.editMode){
-                  shape.frame.toggleVisibility(true);
+                  // if (!shape.frame){
+                    if (!shape.frame){
+                      drawFrameOn(shape, 'makeNew');
+                    }
+                    else {
+                      drawFrameOn(shape, 'updateAll');
+                    }
+
+                  // }
+                  // shape.frame.toggleVisibility(true);
               }
+              shape.active = true;
+
               //show the text corresponding to the shape
               document.getElementById('annotation-text').innerHTML = shape.text;
             }
@@ -186,121 +357,6 @@ angular.module('anotareApp')
           };
           //end mouseActionsOn
 
-          //create frames around the shapes for editMode
-          var drawFrameOn = function(shape){
-           
-            var topLeft = new paper.Point(shape.bounds.topLeft.x-3, 
-              shape.bounds.topLeft.y-3);
-            var topRight = new paper.Point(shape.bounds.topRight.x+3, 
-              shape.bounds.topRight.y-3);
-            var bottomLeft = new paper.Point(shape.bounds.bottomLeft.x-3, 
-              shape.bounds.bottomLeft.y+3);
-            var bottomRight = new paper.Point(shape.bounds.bottomRight.x+3, 
-              shape.bounds.bottomRight.y+3);
-            var frameSize = new paper.Size(shape.bounds.width + 6, shape.bounds.height+6);
-
-            
-
-            var frame = new paper.Path.Rectangle(topLeft,frameSize);
-            frame.type = 'frame';
-            frame.style = styleFrame;
-            frame.visible = false;
-            frame.rectTopLeft = new paper.Path.Rectangle({
-              width: 5,
-              height: 5,
-              style: styleFrameSelector,
-              position: topLeft,
-              visible:  false,
-              onMouseEnter: function(shape){
-                $('html,body').css('cursor','nwse-resize');
-              },
-              onMouseLeave: function(shape){
-                $('html,body').css('cursor','default');
-              },
-              onMouseDrag: function(event){
-                shape.bounds.setTopLeft(event.point.x+3, event.point.y+3);
-                shape.frame.bounds.setTopLeft(event.point);
-                shape.frame.rectTopLeft.setPosition(event.point);
-                shape.frame.rectTopRight.position.setY(event.point.y);
-                shape.frame.rectBottomLeft.position.setX(event.point.x);
-              }
-            });
-            frame.rectTopRight = new paper.Path.Rectangle({
-              width: 5,
-              height: 5,
-              style: styleFrameSelector,
-              position: topRight,
-              visible: false,
-              onMouseEnter: function(shape){
-                $('html,body').css('cursor','nesw-resize');
-              },
-              onMouseLeave: function(shape){
-                $('html,body').css('cursor','default');
-              },
-              onMouseDrag: function(event){
-                shape.bounds.setTopRight(event.point.x-3, event.point.y+3);
-                shape.frame.bounds.setTopRight(event.point);
-                shape.frame.rectTopRight.setPosition(event.point);
-                shape.frame.rectTopLeft.position.setY(event.point.y);
-                shape.frame.rectBottomRight.position.setX(event.point.x);
-              }
-            });
-            frame.rectBottomLeft = new paper.Path.Rectangle({
-              width: 5,
-              height: 5,
-              style: styleFrameSelector,
-              position: bottomLeft,
-              visible: false,
-              onMouseEnter: function(shape){
-                $('html,body').css('cursor','nesw-resize');
-              },
-              onMouseLeave: function(shape){
-                $('html,body').css('cursor','default');
-              },
-              onMouseDrag: function(event){
-                shape.bounds.setBottomLeft(event.point.x+3, event.point.y-3);
-                shape.frame.bounds.setBottomLeft(event.point);
-                shape.frame.rectBottomLeft.setPosition(event.point);
-                shape.frame.rectBottomRight.position.setY(event.point.y);
-                shape.frame.rectTopLeft.position.setX(event.point.x);
-              }
-            });
-            frame.rectBottomRight = new paper.Path.Rectangle({
-              width: 5,
-              height: 5,
-              style: styleFrameSelector,
-              position: bottomRight,
-              visible: false,
-              onMouseEnter: function(shape){
-                $('html,body').css('cursor','nwse-resize');
-              },
-              onMouseLeave: function(shape){
-                $('html,body').css('cursor','default');
-              },
-              onMouseDrag: function(event){
-                shape.bounds.setBottomRight(event.point.x-3, event.point.y-3);
-                shape.frame.bounds.setBottomRight(event.point);
-                shape.frame.rectBottomRight.setPosition(event.point);
-                shape.frame.rectBottomLeft.position.setY(event.point.y);
-                shape.frame.rectTopRight.position.setX(event.point.x);
-              }
-            });
-            frame.toggleVisibility = function (isVisible){
-              frame.visible = isVisible;
-              frame.rectTopLeft.visible = isVisible;
-              frame.rectTopRight.visible = isVisible;
-              frame.rectBottomRight.visible = isVisible;
-              frame.rectBottomLeft.visible = isVisible;
-            }
-
-            frame.setFramePosition = function (point){
-              frame.position = point;
-
-            }
-
-            shape.frame = frame;
-          };
-          //end createFrame
 
           var drawCircle = function( shape ){
             var circle = new paper.Path.Circle({
@@ -360,7 +416,6 @@ angular.module('anotareApp')
               shape.position.setY(annotation.y);
               shape.text = annotation.text;
               shape.active = false;
-              drawFrameOn(shape);
               mouseActionsOn(shape);
             }
             //shape is unidentified

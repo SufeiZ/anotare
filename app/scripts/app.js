@@ -20,15 +20,22 @@ angular
     .config(function($stateProvider, $urlRouterProvider) {
   //
   // For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise('/main');
+  $urlRouterProvider.otherwise('/');
   //
   // Now set up the states
   $stateProvider
-    .state('index', {
-      url: '/main',
-      templateUrl: 'views/main.html'//,
+    .state('welcome', {
+      url: '/',
+      templateUrl: 'views/welcome.html'//,
       //controller: 'WelcomeCtrl'
     })
+
+    .state('explore', {
+      url: '/explore',
+      templateUrl: 'views/explore.html'//,
+      //controller: 'ExploreCtrl'
+    })
+
 
     .state('annotation', {
       url: '/annotation',
