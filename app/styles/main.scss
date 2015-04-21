@@ -96,14 +96,57 @@ body {
   }
 }
 
+#dropdown-context{
+   // z-index:1000;
+   position: absolute;
+   display: none;
+   background-color: white;
+   padding: 10px 15px;
+
+  #shape-list p, #shape-list hr{
+    display: inline-block;
+    vertical-align: middle;
+   }
+  #shape-list hr{
+    margin-top: 9px;
+    margin-left: 10px;
+    height: 2px;
+    border: none;
+   }
+
+  .list-group-horizontal{
+    display: inline-block;
+
+    img{
+      margin: 0 1.5em; 
+      &.first-child{
+        margin-left: 0;
+      }
+      &.last-child{
+        margin-right: 0;
+      }
+    }
+  }
+
+  #annotation-text{
+    border-left-style: none;
+    border-right-style: none;
+  }
+  button{
+    border: none;
+    float: right;
+  }
+}
+
 #annotation-body{
   margin-top: 5%;
+  
   .editing-menu{
     background: #E8E6E3;
     border: 1px black solid;
     position: fixed;
     left: 0;
- }
+  }
   canvas{
     float: left;
     // border: 1px black solid;

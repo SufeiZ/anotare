@@ -18,7 +18,7 @@ angular.module('anotareApp')
                   "<div id='annotation-text'> </div>" +
                 "</div>",
       link: function(scope, element, attribute, event) {
-        scope.editMode = false;
+        // scope.editMode = false;
         var canvas, image, shapeLastClicked;
 
         //global styles to be used on the shapes
