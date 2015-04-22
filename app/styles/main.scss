@@ -5,7 +5,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/font
 
 .browsehappy {
   margin: 0.2em 0;
-  background: #ccc;
+  // background: #ccc;
   color: #000;
   padding: 0.2em 0;
 }
@@ -67,32 +67,39 @@ body {
 
 .jumbotron {
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 60px;
-  margin-top: 5%;
+  // position: relative;
+  // top: 50%;
+  // transform: translateY(-50%);
+  // vertical-align: middle;
+  margin-top: 12%;
+  background: none;
   h1{
-    margin-top: 10px;
+    // margin-top: 10px;
   }
   form {
-    max-width: 350px;
+    max-width: 30%;
     margin-left: auto;
     margin-right: auto;
     input{
-      height: 45px;
-      font-size:18px;
-      border-width: 0.5px;
-      background-color: rgb(250, 255, 189);
+      // height: 45px;
+      // font-size:18px;
+      // border-width: 0.5px;
+      // background-color: #F5F5F5;
+      font-family: 'Josefin Sans', sans-serif;
     }
     .btn {
-      padding:3px;
+      font-family: 'EB Garamond', serif;
+      float: right;
+      // padding:3px;
 //      margin-top: 20px;
-      width: 100%;
-      font-size: 21px;
-      background-color: #ffffff;
+      // width: 100%;
+      // font-size: 21px;
+      // background-color: #ffffff;
     }
     p{
       margin-bottom: 0;
     }
+    
   }
 }
 

@@ -1,27 +1,26 @@
 <div class="jumbotron">
-  <h1><a ui-sref="root.annotation">
-    <img parallax style="z-index: 100; position: absolute; width:200px; margin-top: -40px; margin-left: -40px" ng-src="images/anotare-icon.png"/>
-    <img style="position: relative; width:180px; height:205px; margin-top: 0px" ng-src="images/image-front.jpg"/>
-  </a></h1>
-  <h2><a ui-sref="root.annotation">
-    <img style="max-width:200px; margin-top: 20px;" ng-src="images/anotare-logo.png"/>
-  </a></h2>
-  <p class="lead">
+  <h1>
+    <a ui-sref="root.annotation">
+      <img parallax id="anotare-icon" style="z-index: 100; position: absolute; width:200px; margin-top: -40px; margin-left: -40px" ng-src="images/anotare-icon.png"/>
+      <img id="anotare-image" style="position: relative; width:180px; height:205px; margin-top: 0px" ng-src="images/image-front.jpg"/>
+    </a>
+  </h1>
+  <h2>
+    <a ui-sref="root.annotation">
+      <img style="max-width:300px; margin-top: 20px;" ng-src="images/anotare-logo.png"/>
+    </a>
+  </h2>
+  
+  <p class="lead" style="font-family: 'EB Garamond', serif;">
     Collaborative notetaking space for art lovers.
   </p>
+  
   <form>
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Email">
-      <input type="text" class="form-control" placeholder="Password" style="margin-bottom: 20px">
-      <div class="row">
-        <div class="col-md-3 col-md-offset-6">
-          <a ui-sref="root.explore">Register</a>
-        </div>
-        <div class="col-md-3">
-          <a ui-sref="root.explore">Login</a>
-        </div>
-      </div>
-
-    </div>
-  </form>
+  <div class="form-group">
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+   <button type="submit" class="btn btn-default active">Login</button>
+   <button type="submit" class="btn btn-default">Sign up</button>
+</form>
 </div>
