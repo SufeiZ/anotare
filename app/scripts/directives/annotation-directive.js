@@ -19,6 +19,7 @@ angular.module('anotareApp')
                 "</div>",
       link: function(scope, element, attribute, event) {
         scope.editMode = false;
+        var showDropDown = true;
         var canvas, image, shapeLastClicked;
 
         //global styles to be used on the shapes
@@ -80,6 +81,10 @@ angular.module('anotareApp')
 
         scope.switchEditMode = function(){
           scope.editMode = !scope.editMode;
+          if (scope.editMode){
+            showDropDown = true;
+            scope.hideDropDownMenu();
+          }
           if (typeof shapeLastClicked !== 'undefined') {
             if (scope.editMode) {
               drawFrameOn(shapeLastClicked, 'makeNew');
@@ -107,7 +112,7 @@ angular.module('anotareApp')
           raster.type = 'main-image';
           raster.onLoad = resizeRaster;
           raster.position = paper.view.center;
-          raster.onClick = function(){
+          raster.onClick = function(event){
             if (typeof shapeLastClicked !== 'undefined') {
               shapeLastClicked.style = styleStandard;
               shapeLastClicked.active = false;
@@ -116,8 +121,20 @@ angular.module('anotareApp')
                 shapeLastClicked.frame.remove();
               }
             }
+
+            if (scope.editMode) {
+              if (showDropDown){
+              // console.log(scope.dropDownMenu);
+                scope.showDropDownMenu(event);
+                showDropDown = false;
+              }
+              else {
+                scope.hideDropDownMenu();
+                showDropDown = true;
+              }
           }
         }
+      }
 
         var findAngle = function (centerPoint, rotatePoint, eventPoint ){
           var findDistance = function(point1, point2){
