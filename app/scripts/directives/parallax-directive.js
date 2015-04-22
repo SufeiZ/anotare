@@ -20,8 +20,8 @@
       $(document).mousemove(function(event) {
           currentMousePos.x = event.pageX;
           currentMousePos.y = event.pageY;
-          var marginTop =  initialMarginTop - currentMousePos.x / $(window).width() * 10;
-          var marginLeft = initialMarginLeft - currentMousePos.y / $(window).height() * 10;
+          var marginTop =  initialMarginTop - currentMousePos.x / $(window).width() * 5;
+          var marginLeft = initialMarginLeft - currentMousePos.y / $(window).height() * 5;
 
           element.css({
             "margin-top": marginTop + "px",
