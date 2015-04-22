@@ -30,18 +30,20 @@ angular
       //controller: 'WelcomeCtrl'
     })
 
-    .state('explore', {
-      url: '/explore',
-      templateUrl: 'views/explore.html'//,
-      //controller: 'ExploreCtrl'
+    .state('root', {
+      url: '/main',
+      templateUrl: 'views/root.html'
     })
-
-
-    .state('annotation', {
-      url: '/annotation',
-      templateUrl: 'views/annotation.html',
-      controller: 'AnnotationCtrl'
-    });
+      .state('root.explore', {
+        url: '/explore',
+        templateUrl: 'views/explore.html'//,
+        //controller: 'ExploreCtrl'
+      })
+      .state('root.annotation', {
+        url: '/annotation',
+        templateUrl: 'views/annotation.html',
+        controller: 'AnnotationCtrl'
+      });
 
 });
 
