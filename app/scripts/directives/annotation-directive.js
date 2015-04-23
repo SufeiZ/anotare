@@ -72,13 +72,6 @@ angular.module('anotareApp')
           scope.getImage();
         }
 
-        // var getShapes = function() {
-        //   if (typeof paper !== 'undefined'){
-        //     return paper.project.layers[0].children;
-        //   }
-        //   return null;
-        // }
-
         scope.switchEditMode = function(){
           scope.editMode = !scope.editMode;
           if (scope.editMode){
@@ -461,7 +454,7 @@ angular.module('anotareApp')
             else
             {  
                 image = newVal;
-                drawAll(image);
+                drawAll(image[0]);
             }
         });
 

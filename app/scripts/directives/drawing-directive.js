@@ -5,7 +5,6 @@
  */
 
  angular.module('anotareApp')
-
 .directive('dropTool', function () {
   return {
     restrict: 'E',
@@ -13,16 +12,8 @@
     templateUrl:'views/dropdown.html',
     link: function(scope, element, attribute, event) {
 
-      // var $canvas = $("#main-canvas")
       var $dropdown = $("#dropdown-context");
 
-      // $canvas.bind("click", function(event){
-      //   event.preventDefault();
-
-        // if($dropdown.css("display") == "block"){
-        //   console.log("block");
-        //   $dropdown.css({display:"none"});
-        // } 
       scope.showDropDownMenu = function(ev){
         console.log(ev.event);
         $dropdown.css({

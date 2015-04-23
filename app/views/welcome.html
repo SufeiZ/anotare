@@ -1,8 +1,21 @@
 <div class="jumbotron">
-  <h1><a ui-sref="root.annotation">
-    <img parallax style="z-index: 100; position: absolute; width:200px; margin-top: -40px; margin-left: -40px" ng-src="images/anotare-icon.png"/>
-    <img style="position: relative; width:180px; height:205px; margin-top: 0px" ng-src="images/image-front.jpg"/>
-  </a></h1>
+  <photo-slider>
+    <a class="arrow prev" href="" ng-click="prev()">
+          <img src="/images/left-arrow.png" style="width:15px; position:relative; top:120px; right: 135px"/>
+    </a>
+    <a class="arrow next" href="" ng-click="next()">
+      <img src="/images/right-arrow.png" style="width:15px; position:relative; top:120px; left: 135px"/>
+    </a>
+    <h1><div style="display:inline-block; width: 200px; height: 200px">
+        <a ui-sref="root.annotation">
+          <img parallax offset-parallax="5" direction-parallax="reverse" style="z-index: 100; position: absolute; width:200px; margin-top: -40px; margin-left: -110px" ng-src="images/anotare-icon.png"/>
+          <div ng-repeat="photo in imageScope">
+            <img parallax offset-parallax="15" style="position: relative; width:180px; height:205px; margin-right: -40px" ng-src={{photo.src}} ng-show="photo.visible"/>
+          </div>
+      </a>
+    </div></h1>
+  </photo-slider>
+
   <h2><a ui-sref="root.annotation">
     <img style="max-width:200px; margin-top: 20px;" ng-src="images/anotare-logo.png"/>
   </a></h2>
