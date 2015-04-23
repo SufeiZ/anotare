@@ -1,0 +1,50 @@
+<div class="jumbotron">
+<<<<<<< HEAD
+  <h1>
+    <a ui-sref="root.annotation">
+      <img parallax id="anotare-icon" style="z-index: 100; position: absolute; width:200px; margin-top: -40px; margin-left: -40px" ng-src="images/anotare-icon.png"/>
+      <img id="anotare-image" style="position: relative; width:180px; height:205px; margin-top: 0px" ng-src="images/image-front.jpg"/>
+    </a>
+  </h1>
+  <h2>
+    <a ui-sref="root.annotation">
+      <img style="max-width:300px; margin-top: 20px;" ng-src="images/anotare-logo.png"/>
+    </a>
+  </h2>
+  
+  <p class="lead" style="font-family: 'EB Garamond', serif;">
+=======
+  <photo-slider>
+    <a class="arrow prev" href="" ng-click="prev()">
+          <img src="/images/left-arrow.png" style="width:15px; position:relative; top:120px; right: 135px"/>
+    </a>
+    <a class="arrow next" href="" ng-click="next()">
+      <img src="/images/right-arrow.png" style="width:15px; position:relative; top:120px; left: 135px"/>
+    </a>
+    <h1><div style="display:inline-block; width: 200px; height: 200px">
+        <a ui-sref="root.annotation">
+          <img parallax offset-parallax="5" direction-parallax="reverse" style="z-index: 100; position: absolute; width:200px; margin-top: -40px; margin-left: -110px" ng-src="images/anotare-icon.png"/>
+          <div ng-repeat="photo in imageScope">
+            <img parallax offset-parallax="15" style="position: relative; width:180px; height:205px; margin-right: -40px" ng-src={{photo.src}} ng-show="photo.visible"/>
+          </div>
+      </a>
+    </div></h1>
+  </photo-slider>
+
+  <h2><a ui-sref="root.annotation">
+    <img style="max-width:200px; margin-top: 20px;" ng-src="images/anotare-logo.png"/>
+  </a></h2>
+  <p class="lead">
+>>>>>>> TJ
+    Collaborative notetaking space for art lovers.
+  </p>
+  
+  <form>
+  <div class="form-group">
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+   <button type="submit" class="btn btn-default active">Login</button>
+   <button type="submit" class="btn btn-default">Sign up</button>
+</form>
+</div>
