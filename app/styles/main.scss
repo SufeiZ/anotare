@@ -65,44 +65,6 @@ body {
   margin: 30px 0;
 }
 
-.jumbotron {
-  text-align: center;
-  // position: relative;
-  // top: 50%;
-  // transform: translateY(-50%);
-  // vertical-align: middle;
-  margin-top: 12%;
-  background: none;
-  h1{
-    // margin-top: 10px;
-  }
-  form {
-    max-width: 30%;
-    margin-left: auto;
-    margin-right: auto;
-    input{
-      // height: 45px;
-      // font-size:18px;
-      // border-width: 0.5px;
-      // background-color: #F5F5F5;
-      font-family: 'Josefin Sans', sans-serif;
-    }
-    .btn {
-      font-family: 'EB Garamond', serif;
-      float: right;
-      // padding:3px;
-//      margin-top: 20px;
-      // width: 100%;
-      // font-size: 21px;
-      // background-color: #ffffff;
-    }
-    p{
-      margin-bottom: 0;
-    }
-    
-  }
-}
-
 #dropdown-context{
    // z-index:1000;
    position: absolute;
