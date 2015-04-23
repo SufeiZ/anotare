@@ -1,0 +1,48 @@
+#welcome {
+  text-align: center;
+  background: none;
+
+  #logo-on-photo{
+    a.arrow{
+      img{
+        width:20px; 
+        position:relative; 
+        top:160px;
+      }
+      #right-arrow{
+        right: 180px
+      }
+      #left-arrow{
+        left: 180px
+      }
+    }
+    margin-bottom: 3%;
+  }
+
+  h1{
+  }
+  form {
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    input{
+      // height: 45px;
+      // font-size:18px;
+      // border-width: 0.5px;
+      // background-color: #F5F5F5;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+    button {
+      font-family: 'EB Garamond', serif;
+      float: right;
+      // padding:3px;
+//      margin-top: 20px;
+      // width: 100%;
+      // font-size: 21px;
+      // background-color: #ffffff;
+    }
+    p{
+      margin-bottom: 0;
+    }
+  }
+}
