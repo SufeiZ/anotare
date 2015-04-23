@@ -1,43 +1,66 @@
 {
-    "Album": {
-        "src": "images/picasso1.jpg",
-        "annotations":[
-        				{
-        					"type":"circle",
-        					"x": 210,
-        					"y": 110,
-        					"radius": 40,
-                            "text": "Facing away, shows ignorance"
-        				},
-        				{
-        					"type":"rectangle",
-        					"x": 520,
-        					"y": 70,
-        					"height": 90,
-        					"width": 50,
-                            "text": "Represents a mask, African art's influence on Picasso's work"
-        				},
-        				{
-        					"type":"ellipse",
-        					"x": 370,
-        					"y": 490,
-        					"height": 130,
-        					"width": 90,
-                            "text": "a scything blade of melon with testicular grapes, an apple and a pear"
-        				},
-        				{
-        					"type":"circle",
-        					"x": 520,
-        					"y": 250,
-        					"radius": 60,
-                            "text": "Facing back and stares directly to the audience"
-        				},
-                        {
-                            "type":"pin",
-                            "x": 300,
-                            "y": 130,
-                            "text": "Intimidating the audience by staring"
-                        }
-        			]
-    }
+    "Album":
+    [
+        {
+            "src": "images/picasso1.jpg",
+            "annotations":[
+            				{
+            					"type":"circle",
+            					"x": 210,
+            					"y": 110,
+            					"radius": 40,
+                                "text": "Facing away, shows ignorance"
+            				},
+            				{
+            					"type":"rectangle",
+            					"x": 520,
+            					"y": 70,
+            					"height": 90,
+            					"width": 50,
+                                "text": "Represents a mask, African art's influence on Picasso's work"
+            				},
+            				{
+            					"type":"ellipse",
+            					"x": 370,
+            					"y": 490,
+            					"height": 130,
+            					"width": 90,
+                                "text": "a scything blade of melon with testicular grapes, an apple and a pear"
+            				},
+            				{
+            					"type":"circle",
+            					"x": 520,
+            					"y": 250,
+            					"radius": 60,
+                                "text": "Facing back and stares directly to the audience"
+            				},
+                            {
+                                "type":"pin",
+                                "x": 300,
+                                "y": 130,
+                                "text": "Intimidating the audience by staring"
+                            }
+            			]
+        },
+        {
+            "src": "images/photo1.jpg",
+            "annotations":[]
+        },
+        {
+            "src": "images/photo2.jpg",
+            "annotations":[]
+        },
+        {
+            "src": "images/photo3.jpg",
+            "annotations":[]
+        },
+        {
+            "src": "images/photo4.jpg",
+            "annotations":[]
+        },
+            {
+            "src": "images/photo5.jpg",
+            "annotations":[]
+        }
+    ]
 }

@@ -26,13 +26,15 @@ angular
   $stateProvider
     .state('welcome', {
       url: '/',
-      templateUrl: 'views/welcome.html'//,
-      //controller: 'WelcomeCtrl'
+      templateUrl: 'views/welcome.html',
+      controller: 'AnnotationCtrl'
     })
 
     .state('root', {
       url: '/main',
-      templateUrl: 'views/root.html'
+      templateUrl: 'views/root.html',
+      controller: 'AnnotationCtrl'
+
     })
       .state('root.explore', {
         url: '/explore',
@@ -41,8 +43,7 @@ angular
       })
       .state('root.annotation', {
         url: '/annotation',
-        templateUrl: 'views/annotation.html',
-        controller: 'AnnotationCtrl'
+        templateUrl: 'views/annotation.html'
       });
 
 });
