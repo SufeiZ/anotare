@@ -19,14 +19,9 @@ angular.module('anotareApp')
       var initialMarginLeft = Number(element.css("margin-left").replace(/[^-\d\.]/g, ''));
       var widthElement = Number(element[0].style.width.replace(/[^-\d\.]/g, ''));
       var heightElement = Number(element[0].style.height.replace(/[^-\d\.]/g, ''));
-      console.log(scope.direction);
 
       var centerV = $(window).height() - heightElement/2 + 10;
       var centerH = $(window).width() - widthElement/2;
-      // var eLeft = element.offset().left + element.width()/2;
-      // console.log(element[0].style.width);
-      // $(window).height();
-      // $(window).width();
 
       $(document).mousemove(function(event) {
           currentMousePos.x = event.pageX;
@@ -40,15 +35,11 @@ angular.module('anotareApp')
             var marginTop =  initialMarginTop + (currentMousePos.y - centerV) / centerV * scope.offset;
             var marginLeft = initialMarginLeft + (currentMousePos.x - centerH) / centerH * scope.offset;
           }
-          // console.log(initialMarginTop);
           element.css({
             "margin-top": marginTop + "px",
             "margin-left": marginLeft + "px"
           });
       });
-      // console.log(mouse.getLocation());
-      // var marginTop = element.css("margin-top");
-      // var marginLeft = element.css("margin-left");
 
     }
   };

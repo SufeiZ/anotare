@@ -39,7 +39,6 @@ angular
       .state('root.explore', {
         url: '/explore',
         templateUrl: 'views/explore.html'//,
-        //controller: 'ExploreCtrl'
       })
       .state('root.annotation', {
         url: '/annotation',
