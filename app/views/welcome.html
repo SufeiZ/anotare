@@ -1,30 +1,31 @@
 <div class="jumbotron" id="welcome">
 <div id="logo-on-photo">
   <photo-slider>
-    <div style="display:inline-block; width: 300px; height: 300px">
+    <!-- <div style="display:inline-block;"> -->
+    <div>
       <a class="arrow prev" href="" ng-click="prev()">
-        <img src="/images/left-arrow.png" id="right-arrow"/>
+        <img id="right-arrow" src="/images/left-arrow.png"/>
       </a>
       <a class="arrow next" href="" ng-click="next()">
-        <img src="/images/right-arrow.png" id="left-arrow"/>
+        <img id="left-arrow" src="/images/right-arrow.png"/>
       </a>
       
       <a ui-sref="root.annotation">
         <!-- parallax  -->
-        <img parallax offset-parallax="5" direction-parallax="reverse" style="z-index: 100; position: absolute; width:300px; margin-top: -.6%; margin-left: -10.4%" ng-src="images/anotare-icon.png"/>
-        <div>
-          <img parallax ng-repeat="photo in imageScope" offset-parallax="15" style="position: relative; width:260px; height:295px; margin-right: -18%" ng-src={{photo.src}} ng-show="photo.visible"/>
-        </div>
+        <img parallax id="logo-large-rect" offset-parallax="5" direction-parallax="reverse" ng-src="images/anotare-icon.png"/>
+        <!-- <div> -->
+          <img parallax class="logo-gallary" ng-repeat="photo in imageScope" offset-parallax="15" style="" ng-src={{photo.src}} ng-show="photo.visible"/>
+        <!-- </div> -->
       </a>
     </div>
   </photo-slider>
 </div>
 
 <a ui-sref="root.annotation">
-  <img style="max-width:200px; margin-top: 20px;" ng-src="images/anotare-logo.png"/>
+  <img style="max-width:300px; margin-top: 300px;" ng-src="images/anotare-logo.png"/>
 </a>
 
-<p class="lead">
+<p class="lead" style="margin-top: 20px; font-family: EB Garamond; font-size:25px">
   Collaborative notetaking space for art lovers.
 </p>
 
