@@ -11,6 +11,7 @@
  .controller('AnnotationCtrl', function ($scope, $http, AlbumService) {
   $scope.imageScope;
   $scope.editMode = false;
+  $scope.annotationText = "";
   
   $scope.toolIcons = [
   {

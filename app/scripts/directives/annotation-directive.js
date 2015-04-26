@@ -9,17 +9,20 @@ angular.module('anotareApp')
     return {
       restrict : 'E',
       replace : true,
-      template :"<div class='' id='annotation-body'>" +  
+      template :"<div id='annotation-body'>" +  
                   "<div class='editing-menu'>" +
                     "<a href='' ng-click='switchEditMode()'>edit mode: {{editMode ? 'on' : 'off'}}</a>" +  
                   "</div>" +
                   "<canvas id='main-canvas'>" +
                   "</canvas>" +
-                  "<div id='annotation-text'> </div>" +
+                  "<span ng-bind='annotationText'></span>" +
                 "</div>",
       link: function(scope, element, attribute, event) {
         scope.editMode = false;
-        var showDropDown = true;
+        scope.showDropdown = true;
+        //prevent default right click function
+        window.oncontextmenu = function() { return false;};
+
         var canvas, image, shapeLastClicked;
 
         //global styles to be used on the shapes
@@ -46,28 +49,26 @@ angular.module('anotareApp')
         var styleActive = {
           strokeColor: new paper.Color(0.9,0.1,0.1,1),
           strokeWidth: 3.0,
-          fillColor: new paper.Color(0,0,0,0.3)
+          fillColor: new paper.Color(0,0,0,0.1)
         };
         var styleFrame = {
           strokeColor: new paper.Color(0,0,1,1),
           strokeWidth: 1
         };
         var styleFrameSelector = {
-
           fillColor: new paper.Color(0.2,0.2,0.8,1),
           strokeColor: new paper.Color(1,1,1,1),
           strokeWidth: 0.3
         };
 
         
-
-
         var init = function() {
           canvas = document.getElementById("main-canvas");
           canvas.setAttribute("width", screen.availWidth*.55);
           canvas.setAttribute("height", screen.availHeight*.75);
 
           paper.setup(canvas);
+          scope.paper = paper;
           //ajax http get method to get image object from database
           scope.getImage();
         }
@@ -75,8 +76,8 @@ angular.module('anotareApp')
         scope.switchEditMode = function(){
           scope.editMode = !scope.editMode;
           if (scope.editMode){
-            showDropDown = true;
-            scope.hideDropDownMenu();
+            scope.showDropdown = true;
+            scope.hideDropdown();
           }
           if (typeof shapeLastClicked !== 'undefined') {
             if (scope.editMode) {
@@ -94,11 +95,18 @@ angular.module('anotareApp')
 
           //resize the image to max in the canvas
           var resizeRaster = function(){
-            var height = this._size.height;
-            var width = this._size.width;
-            var scale = Math.max(height/canvas.height, width/canvas.width);
-            this.height = height * scale;
-            this.width = width * scale;
+            var rasterHeight = this.getHeight();
+            var rasterWidth = this.getWidth();
+            var scale = Math.max(rasterHeight/canvas.height, rasterWidth/canvas.width);
+
+            if (scale <= 1) {
+              this.setHeight(rasterHeight * scale);
+              this.setWidth(rasterWidth * scale);
+            }
+            else {
+              this.setHeight(rasterHeight / scale);
+              this.setWidth(rasterWidth / scale);
+            }
           }
 
           var raster = new paper.Raster(image.src);
@@ -116,14 +124,14 @@ angular.module('anotareApp')
             }
 
             if (scope.editMode) {
-              if (showDropDown){
+              if (scope.showDropdown){
               // console.log(scope.dropDownMenu);
-                scope.showDropDownMenu(event);
-                showDropDown = false;
+                scope.drawDropdown(event);
+                scope.showDropdown = false;
               }
               else {
-                scope.hideDropDownMenu();
-                showDropDown = true;
+                scope.hideDropdown();
+                scope.showDropdown = true;
               }
           }
         }
@@ -273,7 +281,7 @@ angular.module('anotareApp')
         
 
         //draw shapes on the image/Raster
-        var drawAnnotations = function( annotations ){
+        scope.drawAnnotation = function( annotation ){
 
           //function closure ftw
           var mouseActionsOn = function(shape){
@@ -324,7 +332,9 @@ angular.module('anotareApp')
 
             //give an active effect when shape is clicked, show frame only when editMode is true
             //shapeLastClicked is a 'global' variable to determine which shape was last clicked
-            var mouseClickEffect = function(shape) {
+            var mouseClickEffect = function(event, shape) {
+              // console.log(event.event.which);
+              // event.preventDefault();
               if (typeof shapeLastClicked !== 'undefined' && shapeLastClicked !== shape ){
                 if (shapeLastClicked.type === 'pin') {
                     shapeLastClicked.style = stylePin;
@@ -340,57 +350,105 @@ angular.module('anotareApp')
                 }
               }
               shapeLastClicked = shape;
-              if (scope.editMode){
-                  // if (!shape.frame){
-                    if (!shape.frame){
-                      drawFrameOn(shape, 'makeNew');
-                    }
-                    else {
-                      drawFrameOn(shape, 'updateAll');
-                    }
 
-                  // }
-                  // shape.frame.toggleVisibility(true);
-              }
               shape.active = true;
 
+              shape.style = styleActive;
+              scope.hideDropdown();
+              scope.showDropdown = false;
+              // scope.showDropDown = true;
+
               //show the text corresponding to the shape
-              document.getElementById('annotation-text').innerHTML = shape.text;
+              scope.$apply(function() {
+                scope.annotationText = shape.text;
+              });
+
+              if (scope.editMode){
+                if (event.event.which === 3){ //right click event
+                  scope.drawDropdown(event, shape);
+                }
+                if (!shape.frame){
+                  drawFrameOn(shape, 'makeNew');
+                }
+                else {
+                  drawFrameOn(shape, 'updateAll');
+                }
+              }
+              // return false;
             }
+
+            // var mouseRightClickEffect = function(event, shape) {
+            //   console.log("rightclick");
+            //   mouseLeftClickEffect(event, shape);
+            //   if (scope.editMode){
+            //     scope.drawDropdown(event, shape);
+            //   }
+            // }
+            // console.log(shape);
 
             //override the mouse actions of shape
             shape.onMouseDrag   = function(event) { mouseDragEffect  ( event, shape ) };
             shape.onMouseEnter  = function() { mouseEnterEffect ( shape ) };
             shape.onMouseLeave  = function() { mouseLeaveEffect ( shape ) };
-            shape.onClick       = function() { mouseClickEffect ( shape ) };
+            shape.onClick       = function(event) {mouseClickEffect ( event, shape); return false;}
+            // shape.oncontextmenu = function(event) { mouseRightClickEffect ( event, shape) };
 
           };
           //end mouseActionsOn
 
 
           var drawCircle = function( shape ){
-            var circle = new paper.Path.Circle({
-              radius: shape.radius,
-              style: styleStandard,
-            });
+            var circle;
+            if (typeof shape.radius === 'undefined'){
+              circle = new paper.Path.Circle({
+                radius: 50,
+                style: styleStandard,
+              });
+            }
+            else {
+              circle = new paper.Path.Circle({
+                radius: shape.radius,
+                style: styleStandard,
+              });
+            }
             return circle;
           };
 
           var drawRect = function( shape ){
-            var rect = new paper.Path.Rectangle({
-              width: shape.width,
-              height: shape.height,
-              style: styleStandard
-            });
+            var rect;
+            if (typeof shape.width === 'undefined' || typeof shape.height === 'undefined'){
+              rect = new paper.Path.Rectangle({
+                width: 70,
+                height: 70,
+                style: styleStandard
+              });
+            }
+            else {
+              rect = new paper.Path.Rectangle({
+                width: shape.width,
+                height: shape.height,
+                style: styleStandard
+              });
+            }
             return rect;
           };
 
           var drawEllipse = function( shape ){
-            var ellipse = new paper.Path.Ellipse({
-              width: shape.width,
-              height: shape.height,
-              style: styleStandard
-            });
+            var ellipse;
+            if (typeof shape.width === 'undefined' || typeof shape.height === 'undefined'){
+              ellipse = new paper.Path.Ellipse({
+                width: 70,
+                height: 50,
+                style: styleStandard
+              });
+            }
+            else {
+              ellipse = new paper.Path.Ellipse({
+                width: shape.width,
+                height: shape.height,
+                style: styleStandard
+              });
+            }
             return ellipse;
           };
 
@@ -402,38 +460,38 @@ angular.module('anotareApp')
             return pin;
           };
 
+
           //draw every annotation from annotations
-          annotations.forEach(function(annotation){
-            var shape;
+          var shape;
 
-            if (annotation.type === 'circle'){
-              shape = drawCircle(annotation);
-            }
-            else if (annotation.type === 'rectangle'){
-              shape = drawRect(annotation);
-            }
-            else if (annotation.type === 'ellipse'){
-              shape = drawEllipse(annotation);
-            }
-            else if(annotation.type === 'pin'){
-              shape = drawPin(annotation);
-            }
+          if (annotation.type === 'circle'){
+            shape = drawCircle(annotation);
+          }
+          else if (annotation.type === 'rectangle'){
+            shape = drawRect(annotation);
+          }
+          else if (annotation.type === 'ellipse'){
+            shape = drawEllipse(annotation);
+          }
+          else if(annotation.type === 'pin'){
+            shape = drawPin(annotation);
+          }
 
-            //creating the frame and overriding mouse actions on every shape
-            if (typeof shape !== 'undefined') {
-              shape.type = annotation.type;
-              shape.position.setX(annotation.x);
-              shape.position.setY(annotation.y);
-              shape.text = annotation.text;
-              shape.active = false;
-              mouseActionsOn(shape);
-            }
-            //shape is unidentified
-            else{
-              console.log('Shape' + annotation.type + 'is unidentified');
-            }
+          //creating the frame and overriding mouse actions on every shape
+          if (typeof shape !== 'undefined') {
+            shape.type = annotation.type;
+            shape.position.setX(annotation.x);
+            shape.position.setY(annotation.y);
+            shape.text = annotation.text;
+            shape.active = false;
+            mouseActionsOn(shape);
+            return shape;
+          }
+          //shape is unidentified
+          else{
+            console.log('Shape' + annotation.type + 'is unidentified');
+          }
 
-          });
         };
         //end drawAnnotations
 
@@ -441,7 +499,9 @@ angular.module('anotareApp')
         var drawAll = function(image){
           if (typeof image !== 'undefined') {
             drawImage(image);
-            drawAnnotations(image.annotations);
+            image.annotations.forEach(function(annotation){
+              scope.drawAnnotation(annotation);
+            });
           }
         };
 

@@ -11,9 +11,9 @@
       
       <a ui-sref="root.annotation">
         <!-- parallax  -->
-        <img parallax offset-parallax="5" direction-parallax="reverse" style="z-index: 100; position: absolute; width:300px; margin-top: -.6%; margin-left: -10.4%" ng-src="images/anotare-icon.png"/>
+        <img parallax offset-parallax="5" direction-parallax="reverse" style="z-index: 100; position: absolute; max-width:20%; margin-top: -.6%; margin-left: -10.4%" ng-src="images/anotare-icon.png"/>
         <div>
-          <img parallax ng-repeat="photo in imageScope" offset-parallax="15" style="position: relative; width:260px; height:295px; margin-right: -18%" ng-src={{photo.src}} ng-show="photo.visible"/>
+          <img parallax ng-repeat="photo in imageScope" offset-parallax="15" style="position: relative; width:10%; height:10%; margin-right: -18%" ng-src={{photo.src}} ng-show="photo.visible"/>
         </div>
       </a>
     </div>
@@ -33,7 +33,7 @@
     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-default active">Login</button>
-  <button type="submit" class="btn btn-default">Sign up</button>
+  <button type="submit" ui-sref="root.explore" class="btn btn-default active">Login</button>
+  <button type="submit" ui-sref="root.explore" class="btn btn-default">Sign up</button>
 </form>
 </div>

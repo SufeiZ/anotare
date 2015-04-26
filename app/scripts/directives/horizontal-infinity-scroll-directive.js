@@ -19,13 +19,9 @@ angular.module('anotareApp')
 
 
             scope.loadMore = function() {
-                for (var i = 0; i < 5; i++) {
+                for (var i = 0; i < 5 && lastImageIndex < scope.imageScope.length; i++) {
                     scope.items.push(scope.imageScope[lastImageIndex]);
                     lastImageIndex++;
-                    if (lastImageIndex >= scope.imageScope.length){
-                        lastImageIndex = 0;
-                        // allImagesLoaded = true;
-                    }
                 }
             };
 
