@@ -4,8 +4,17 @@
 
 	.explore-header{
 		width: 100%;
-		height: 55%;
+		height: 350px;
 		background-image: url(/images/photo3.jpg);
+		background-position: center;
+		background-size: cover;
+		margin: 0;
+
+		.container{
+			padding-top: 180px;
+      		font-family: 'EB Garamond', serif;
+			color: white;
+		}
 	}
 
 }
