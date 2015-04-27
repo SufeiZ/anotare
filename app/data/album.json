@@ -3,7 +3,15 @@
     [
         {
             "src": "images/picasso1.jpg",
+            "title": "Les Demoiselles d'Avignon",
+            "artist": "Pablo Picasso",
+            "location": "Museum of Modern Art",
+            "period": "Cubism",
+            "year": "1907–1907",
+            "media": "Oil paint",
+            "size": ["96", "92", "in"],
             "annotations":[
+
             				{
             					"type":"circle",
             					"x": 210,
@@ -44,10 +52,24 @@
         },
         {
             "src": "images/photo1.jpg",
+            "title": "",
+            "artist": "René Reichelt",
+            "location": "",
+            "period": "",
+            "year": "",
+            "media": "",
+            "size": [],
             "annotations":[]
         },
         {
             "src": "images/photo2.jpg",
+            "title": "",
+            "artist": "",
+            "location": "",
+            "period": "",
+            "year": "",
+            "media": "",
+            "size": [],
             "annotations":[]
         },
         {

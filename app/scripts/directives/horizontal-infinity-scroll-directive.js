@@ -10,13 +10,11 @@ angular.module('anotareApp')
         restrict : 'EA',
         //TODO : use local scope variables instead of polluting the global scope
         link: function(scope, element, attribute) {
-
-            scope.items = [];
+            
             var lastImageIndex = 0;
             var allImagesLoaded = false;
             var firstLoad = true;
             var raw = element[0];
-
 
             scope.loadMore = function() {
                 for (var i = 0; i < 5 && lastImageIndex < scope.imageScope.length; i++) {
