@@ -5,16 +5,44 @@
 	.explore-header{
 		width: 100%;
 		height: 350px;
-		background-image: url(/images/photo3.jpg);
+		background-image: url(/images/photo4.jpg);
 		background-position: center;
 		background-size: cover;
 		margin: 0;
 
 		.container{
 			padding-top: 180px;
-      		font-family: 'EB Garamond', serif;
+			font-family: 'EB Garamond', serif;
 			color: white;
 		}
+	}
+	.arrow-group{
+		.arrow{
+			width:15px; 
+			padding-top: 90px;
+			position:relative;			
+		}
+		.prev{
+			float: left;
+		}
+		.next{
+			float: right;
+		}
+	}
+	.scroll-gallery{
+	    // overflow-x:hidden;
+	    overflow: auto;
+	    white-space: nowrap;
+	    &::-webkit-scrollbar { 
+	    	display: none; 
+	    }
+	    img{
+	    	height: 200px; 
+	    	margin-left: 10px; 	
+	    	&:first-child{
+	    		margin-left: 0;
+	    	}
+	    }
 	}
 
 }
