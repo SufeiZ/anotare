@@ -15,12 +15,12 @@
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>This Week's Topic</h4>
 			<div class="arrow-group">
-				<a href="" ng-mouseenter="scrollLeft()" ng-mouseleave="scrollEnd()">
-					<img class="arrow prev" src="/images/left-arrow.png"/>
-				</a>
-				<a href="" ng-mouseenter="scrollRight()" ng-mouseleave="scrollEnd()">
-					<img class="arrow next" src="/images/right-arrow.png"/>
-				</a>
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
 			</div>
 			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()">
 				<a href="" class="scroll-photo" ng-repeat="item in items">
@@ -32,12 +32,12 @@
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>Trending</h4>
 			<div class="arrow-group">
-				<a href="" ng-mouseenter="scrollLeft()" ng-mouseleave="scrollEnd()">
-					<img class="arrow prev" src="/images/left-arrow.png"/>
-				</a>
-				<a href="" ng-mouseenter="scrollRight()" ng-mouseleave="scrollEnd()">
-					<img class="arrow next" src="/images/right-arrow.png"/>
-				</a>
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
 			</div>
 			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
 				<a class="scroll-photo" ng-repeat="item in items">
@@ -49,12 +49,12 @@
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>Favorites</h4>
 			<div class="arrow-group">
-				<a href="" ng-mouseenter="scrollLeft()" ng-mouseleave="scrollEnd()">
-					<img class="arrow prev" src="/images/left-arrow.png"/>
-				</a>
-				<a href="" ng-mouseenter="scrollRight()" ng-mouseleave="scrollEnd()">
-					<img class="arrow next" src="/images/right-arrow.png"/>
-				</a>
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
 			</div>
 			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
 				<div class="scroll-photo" ng-repeat="item in items">
