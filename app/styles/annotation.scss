@@ -17,19 +17,3 @@
     float: left;
   }
 }
-
-html, body
-{
-  height: 100%;
-}
-
-.row
-{
-    height: 100%;
-    display: table-row;
-}
-.col-md-1, .col-md-8, .col-md-3
-{
-    display: table-cell;
-    height: 100%;
-}
