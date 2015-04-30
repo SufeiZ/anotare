@@ -1,0 +1,67 @@
+<div class="explore-container">
+	<div class="explore-header">
+		<div class="container">
+			<h2>
+				Herbert Chmieleski
+			</h2>
+			<h3>
+				Into the snow
+			</h3>
+		</div>
+	</div>
+
+
+	<div class="container horizontal-gallery">
+		<div ng-controller="GalleryCtrl" class="row">
+			<h4>This Week's Topic</h4>
+			<div class="arrow-group">
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
+			</div>
+			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()">
+				<a href="" class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</a>
+			</div>
+		</div>
+		<div ng-controller="GalleryCtrl" class="row">
+			<h4>Trending</h4>
+			<div class="arrow-group">
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
+			</div>
+			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
+				<a class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</a>
+			</div>
+		</div>
+		<div ng-controller="GalleryCtrl" class="row">
+			<h4>Favorites</h4>
+			<div class="arrow-group">
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
+			</div>
+			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
+				<div class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+<<<<<<< HEAD
+<div id='annotation-body' class='.container-fluid'>
+=======
+<div id='annotation-body' class='.container-fluid body'>
+>>>>>>> csshelp
+    <div class='row'>
+    	<div class='col-md-1'>
+        	<a href='' ng-click='switchEditMode()'>edit mode: {{editMode ? 'on' : 'off'}}</a> 
+        </div>
+        <div class='col-md-8'>
+        	<canvas id='main-canvas'></canvas>
+        </div>
+        <div class='col-md-3' ng-bind='annotationText'></div>
+    </div>
+</div>
