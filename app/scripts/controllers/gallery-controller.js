@@ -11,6 +11,7 @@
  .controller('GalleryCtrl', function ($scope, $http, AlbumService) {
 
     $scope.items = [];
+    $scope.imageScope = [];
 
     // Call the async method and then do stuff with what is returned inside the function
     $scope.getImage = function() {

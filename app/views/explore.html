@@ -1,13 +1,27 @@
 <div class="explore-container">
 	<div class="explore-header">
-		<div class="container">
-			<h2>
-				Herbert Chmieleski
-			</h2>
-			<h3>
-				Into the snow
-			</h3>
-		</div>
+			<div photo-slider class="explore-container">
+				<div id="explore-header-navigation">
+	   				<nav class="nav">
+				        <div class="wrapper">
+				            <ul class="dots">
+				                <li class="dot" ng-repeat="item in items">
+				                    <a href="" ng-class="{'active':isCurrentIndex($index)}"
+				                       ng-click="setCurrentIndex($index)">
+				                   	</a>
+				                </li>
+				            </ul>
+				        </div>
+				    </nav>
+	   			</div>
+				<a href="" class="header-photo" ng-repeat="item in items" ng-show="item.visible">
+					<div class="text-content"><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div>
+					<img ng-src={{item.src}} />
+				</a>
+
+				
+
+			</div>
 	</div>
 
 

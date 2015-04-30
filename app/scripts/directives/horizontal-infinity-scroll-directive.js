@@ -34,6 +34,13 @@ angular.module('anotareApp')
                 }
             };
 
+            // scope.loadAll = function() {
+            //     for (var i = 0; i < scope.imageScope.length; i++) {
+            //         scope.items.push(scope.imageScope[lastImageIndex]);
+            //         // lastImageIndex++;
+            //     }
+            // };
+
             //move to next photo, or first photo if it's the last photo
             scope.scrollRight = function () {
                 isScrolling = true;

@@ -5,65 +5,72 @@
  */
 
 angular.module('anotareApp')
-.directive('photoSlider', function () {
+.directive('photoSlider', function ($interval) {
     return {
-        restrict : 'E',
+        restrict : 'EA',
         //TODO : use local scope variables instead of polluting the global scope
         link: function(scope) {
             scope.currentIndex = 0;
 
+            scope.loadToItem = function() {
+                for (var i = 1; i < 5; i++) {
+                    scope.items.push(scope.imageScope[i]);
+                    scope.items[i-1].visible = false;
+                    // lastImageIndex++;
+                }
+                scope.items[scope.currentIndex].visible = true;
+            };
+
             //move to next photo, or first photo if it's the last photo
             scope.next = function () {
-                scope.imageScope[scope.currentIndex].visible = false;
-                scope.currentIndex = scope.currentIndex < scope.imageScope.length - 1 ? scope.currentIndex + 1 : 0;
-                scope.imageScope[scope.currentIndex].visible = true;
+                scope.items[scope.currentIndex].visible = false;
+                scope.currentIndex = scope.currentIndex < scope.items.length - 1 ? scope.currentIndex + 1 : 0;
+                scope.items[scope.currentIndex].visible = true;
             };
             //move to previous photo, or last photo if it's the first photo
             scope.prev = function () {
-                scope.imageScope[scope.currentIndex].visible = false;
-                scope.currentIndex = scope.currentIndex > 0 ? scope.currentIndex - 1  : scope.imageScope.length - 1;
-                scope.imageScope[scope.currentIndex].visible = true;
+                scope.items[scope.currentIndex].visible = false;
+                scope.currentIndex = scope.currentIndex > 0 ? scope.currentIndex - 1  : scope.items.length - 1;
+                scope.items[scope.currentIndex].visible = true;
             };
 
-            //update index (if it goes out of bounds) after the imageScope array modified
-            scope.updateCurrentIndexAfterSearch = function () {
-                if (scope.currentIndex > scope.imageScope.length - 1)
+            //used in the welcome page to link between the dots and the images
+            scope.setCurrentIndex = function (index) {
+                scope.currentIndex = index;
+            };
+            //used in the welcome page to link between the dots and the images
+            scope.isCurrentIndex = function (index) {
+                return scope.currentIndex === index;
+            };
+
+            //set other images visibilty to false (so that it the ng-show property is false), only set the image of the 
+            // current index true
+            scope.updateSlide = function () {
+                if (typeof scope.items !== 'undefined' && scope.items.length > 0 )
                 {
-                    scope.currentIndex = scope.imageScope.length - 1;
+                    angular.forEach(scope.items, function(image) {
+                    image.visible = false; // make every image invisible
+                    });
+                    scope.items[scope.currentIndex].visible = true; // make the current image visible
                 }
             };
+
+            //update the slide if there is any changes to the currentIndex
+            scope.$watch('currentIndex', function() {
+                scope.updateSlide();
+            });
+
 
             scope.$watch('imageScope', function(newVal, oldVal) {
                 if (typeof newVal !== 'undefined' && newVal.length > 0)
                 {   
-                    angular.forEach(newVal, function(image) {
-                        image.visible = false; // make every image invisible
-                    });
-                    newVal[scope.currentIndex].visible = true;
+                    scope.loadToItem();
                 }
             });
 
             scope.getImage();
+            $interval(scope.next, 5000);
 
-            // //update the slide if there is any changes to the array imageScope
-            // scope.$watchCollection('imageScope', function(newVal, oldVal) {
-
-            //     //if the old imageScope array is empty, then set the current index to 0
-            //     if (typeof oldVal === 'undefined' || oldVal.length <= 0)
-            //     {   
-            //         scope.currentIndex = 0 ;
-            //         scope.updateSlide();
-            //     }
-            //     //if the current photo displayed is not included in the new array imageScope
-            //     else if (newVal.indexOf(oldVal[scope.currentIndex]) === -1)
-            //     {  
-            //         angular.forEach(oldVal, function(image) {
-            //             image.visible = false; // make every image invisible
-            //         });
-            //         scope.currentIndex = 0;
-            //         scope.updateSlide();
-            //     }
-            // });
         }
     };
 });
