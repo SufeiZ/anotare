@@ -22,8 +22,11 @@
 					<img class="arrow next" src="/images/right-arrow.png"/>
 				</a>
 			</div>
-			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
-				<img ng-repeat="item in items" ng-src={{item.src}} />
+			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()">
+				<a href="" class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</a>
 			</div>
 		</div>
 		<div ng-controller="GalleryCtrl" class="row">
@@ -37,7 +40,10 @@
 				</a>
 			</div>
 			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
-				<img ng-repeat="item in items" ng-src={{item.src}} />
+				<a class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</a>
 			</div>
 		</div>
 		<div ng-controller="GalleryCtrl" class="row">
@@ -51,7 +57,10 @@
 				</a>
 			</div>
 			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
-				<img ng-repeat="item in items" ng-src={{item.src}} />
+				<div class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -36,11 +36,45 @@
 	    &::-webkit-scrollbar { 
 	    	display: none; 
 	    }
-	    img{
-	    	height: 200px; 
-	    	margin-left: 10px; 	
-	    	&:first-child{
-	    		margin-left: 0;
+	    .scroll-photo{
+	    	display: inline-block;
+	    	position: relative;
+	    	margin-right: 10px; 	
+	    		&:last-child{
+	    			margin-right: 0;
+	    		}
+	    	img{
+	    		height: 200px; 
+	    	}
+	    	.text-content{
+	    		// cursor: pointer;
+	    		position: absolute;
+	    		left: 0;
+	    		top: 0;
+	    		opacity: 0;
+	    		height: 100%;
+	    		width: 100%;
+	    		margin-left: 2px;
+	    		background-color: rgba(0, 0, 0, 0.3);
+	    		-webkit-transition: opacity 500ms;
+	    		-moz-transition: opacity 500ms;
+	    		-o-transition: opacity 500ms;
+	    		transition: opacity 500ms;
+	    		&:hover{
+	    			opacity: 1;
+	    		}
+	    		
+	    		div{
+	    			color: white;
+	    			white-space: nowrap;
+	    			display: inline-block;  
+	    			overflow: hidden;
+	    			text-overflow: ellipsis;
+	    			position: absolute;
+	    			width: 90%;
+	    			left: 5px;
+	    			bottom: 5%;
+	    		}
 	    	}
 	    }
 	}

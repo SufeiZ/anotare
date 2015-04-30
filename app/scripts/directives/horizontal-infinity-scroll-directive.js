@@ -26,6 +26,7 @@ angular.module('anotareApp')
             //move to next photo, or first photo if it's the last photo
             scope.scrollRight = function () {
                 raw.scrollLeft += 200;
+                // raw.animate({ scrollRight: "-=" + 25 + "px"});
             };
             //move to previous photo, or last photo if it's the first photo
             scope.scrollLeft = function () {
