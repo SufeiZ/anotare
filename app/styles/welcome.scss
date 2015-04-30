@@ -21,28 +21,28 @@
       z-index: 100; 
       position: absolute;
       left: 50%;
-      transform: translateX(-55%);
+      transform: translateX(-57%);
       top:20px; 
-      width:23em; 
+      width:18em; 
     }
-    .logo-gallary{
+    .logo-gallery{
       position: absolute;
       left: 50%;
-      transform: translateX(-45%);
+      transform: translateX(-43%);
       top: 70px;
-      width: 20em;
-      height: 22em;
+      width: 16em;
+      height: 18em;
     }
   }
 
   form {
-    width: 430px;
-    margin: 20px auto 0 auto;
+    width: 330px;
+    margin: 0 auto 0 auto;
     input{
       font-family: 'Josefin Sans', sans-serif;
-      margin-top: 20px;
-      height: 40px;
-      font-size: 18px;
+      margin-top: 10px;
+      height: 30px;
+      font-size: 15px;
       color: black;
       background-color: #F5F5F5;
       &::-webkit-input-placeholder { 
@@ -54,10 +54,21 @@
       font-family: 'EB Garamond', serif;
       float: right;
       border:none;
-      font-size: 20px;
-      margin: 15px 0 0 20px;
+      font-size: 15px;
+      margin: 0 0 0 5px;
       &.active{
       }
     }
   }
+}
+
+#welcome-icon{
+  max-width:210px;
+  margin-top: 250px;
+}
+
+#welcome-caption{
+  margin-top: 15px;
+  font-family: 'EB Garamond', serif;
+  font-size:20px;
 }

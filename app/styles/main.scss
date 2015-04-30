@@ -102,26 +102,6 @@ body {
   }
 }
 
-#annotation-body{
-  margin-top: 5%;
-  
-  .editing-menu{
-    background: #E8E6E3;
-    border: 1px black solid;
-    position: fixed;
-    left: 0;
-  }
-  canvas{
-    float: left;
-    // border: 1px black solid;
-  }
-  #annotation-text{
-    border: 1px black solid;
-    float: left;
-  }
-}
-
-
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;

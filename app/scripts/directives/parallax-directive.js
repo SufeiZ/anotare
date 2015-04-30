@@ -20,7 +20,7 @@ angular.module('anotareApp')
       var widthElement = Number(element[0].style.width.replace(/[^-\d\.]/g, ''));
       var heightElement = Number(element[0].style.height.replace(/[^-\d\.]/g, ''));
 
-      var centerV = $(window).height() - heightElement/2 + 10;
+      var centerV = $(window).height() - heightElement/2 + 40;
       var centerH = $(window).width() - widthElement/2;
 
       $(document).mousemove(function(event) {

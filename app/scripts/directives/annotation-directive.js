@@ -9,19 +9,12 @@ angular.module('anotareApp')
     return {
       restrict : 'E',
       replace : true,
-      template :"<div id='annotation-body'>" +  
-                  "<div class='editing-menu'>" +
-                    "<a href='' ng-click='switchEditMode()'>edit mode: {{editMode ? 'on' : 'off'}}</a>" +  
-                  "</div>" +
-                  "<canvas id='main-canvas'>" +
-                  "</canvas>" +
-                  "<span ng-bind='annotationText'></span>" +
-                "</div>",
+      templateUrl :'views/display-annotation.html',
       link: function(scope, element, attribute, event) {
         scope.editMode = false;
         scope.showDropdown = true;
         //prevent default right click function
-        window.oncontextmenu = function() { return false;};
+        // window.oncontextmenu = function() { return false;};
 
         var canvas, image, shapeLastClicked;
 
@@ -64,8 +57,8 @@ angular.module('anotareApp')
         
         var init = function() {
           canvas = document.getElementById("main-canvas");
-          canvas.setAttribute("width", screen.availWidth*.55);
-          canvas.setAttribute("height", screen.availHeight*.75);
+          // canvas.setAttribute("width", screen.availWidth*.55);
+          // canvas.setAttribute("height", screen.availHeight*.75);
 
           paper.setup(canvas);
           scope.paper = paper;

@@ -1,7 +1,6 @@
 <div class="jumbotron" id="welcome">
 <div id="logo-on-photo">
   <photo-slider>
-    <!-- <div style="display:inline-block;"> -->
     <div>
       <a class="arrow prev" href="" ng-click="prev()">
         <img id="right-arrow" src="images/left-arrow.png"/>
@@ -11,21 +10,18 @@
       </a>
       
       <a ui-sref="root.annotation">
-        <!-- parallax  -->
         <img parallax id="logo-large-rect" offset-parallax="5" direction-parallax="reverse" ng-src="images/anotare-icon.png"/>
-        <!-- <div> -->
-          <img parallax class="logo-gallary" ng-repeat="photo in imageScope" offset-parallax="15" style="" ng-src={{photo.src}} ng-show="photo.visible"/>
-        <!-- </div> -->
+          <img parallax class="logo-gallery" ng-repeat="photo in imageScope" offset-parallax="15" style="" ng-src={{photo.src}} ng-show="photo.visible"/>
       </a>
     </div>
   </photo-slider>
 </div>
 
 <a ui-sref="root.annotation">
-  <img style="max-width:300px; margin-top: 300px;" ng-src="images/anotare-logo.png"/>
+  <img id="welcome-icon" ng-src="images/anotare-logo.png"/>
 </a>
 
-<p class="lead" style="margin-top: 20px; font-family: EB Garamond; font-size:25px">
+<p id="welcome-caption" class="lead">
   Collaborative notetaking space for art lovers.
 </p>
 
