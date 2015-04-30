@@ -14,7 +14,18 @@ angular.module('anotareApp')
             var lastImageIndex = 0;
             var allImagesLoaded = false;
             var firstLoad = true;
+            // var jRaw = $(element[0]);
             var raw = element[0];
+            var isScrolling = false;
+            var intervalID;
+
+            function pauseBrowser(millis) {
+                var date = Date.now();
+                var curDate = null;
+                do {
+                    curDate = Date.now();
+                } while (curDate-date < millis);
+            }
 
             scope.loadMore = function() {
                 for (var i = 0; i < 5 && lastImageIndex < scope.imageScope.length; i++) {
@@ -25,11 +36,33 @@ angular.module('anotareApp')
 
             //move to next photo, or first photo if it's the last photo
             scope.scrollRight = function () {
-                raw.scrollLeft += 200;
+                isScrolling = true;
+                // while(isScrolling){
+                intervalID =  window.setInterval( function(){
+                    if (isScrolling){
+                        $(raw).animate( { scrollLeft: '+=20' }, 100);
+                    }
+                },100);
+                    // pauseBrowser(1000);
+                // }
             };
+
+            scope.scrollEnd = function () {
+                window.clearInterval(intervalID);
+                isScrolling = false;
+            }
             //move to previous photo, or last photo if it's the first photo
             scope.scrollLeft = function () {
-                raw.scrollLeft -= 200;
+                isScrolling = true;
+                // while (isScrolling){
+                intervalID = window.setInterval( function(){
+                    if (isScrolling){
+                        $(raw).animate( { scrollLeft: '-=20' }, 100);
+                    }
+                },100);
+                    // pauseBrowser(1000);
+
+                // }
             };
 
             scope.getImage();

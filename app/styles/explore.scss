@@ -5,16 +5,96 @@
 	.explore-header{
 		width: 100%;
 		height: 350px;
-		background-image: url(/images/photo3.jpg);
+		background-image: url(/images/photo4.jpg);
 		background-position: center;
 		background-size: cover;
 		margin: 0;
 
 		.container{
 			padding-top: 180px;
-      		font-family: 'EB Garamond', serif;
+			font-family: 'EB Garamond', serif;
 			color: white;
 		}
+	}
+	.arrow-group{
+		span{
+			cursor: pointer;
+			z-index: 120;
+			// background-color: rgba(0,0,0, 0.3);
+			// background-color: rgba(255, 255, 255, 0.3);
+			height: 200px;
+			width: 50px;
+			opacity: 0;
+			.arrow{
+				width:30px; 
+				padding-top: 70px;
+				position:relative;			
+			}
+			&.prev{
+				float: left;
+				img{
+
+				}
+			}
+			&.next{
+				float: right;
+				img{
+					margin-left: 15px;
+				}
+			}
+			&:hover{
+				opacity: 1;
+			}
+		}
+	}
+	.scroll-gallery{
+	    // overflow-x:hidden;
+	    overflow: auto;
+	    white-space: nowrap;
+	    &::-webkit-scrollbar { 
+	    	display: none; 
+	    }
+	    .scroll-photo{
+	    	display: inline-block;
+	    	position: relative;
+	    	margin-right: 10px; 	
+	    		&:last-child{
+	    			margin-right: 0;
+	    		}
+	    	img{
+	    		height: 200px; 
+	    	}
+	    	.text-content{
+	    		// cursor: pointer;
+	    		position: absolute;
+	    		left: 0;
+	    		top: 0;
+	    		opacity: 0;
+	    		height: 100%;
+	    		width: 100%;
+	    		margin-left: 2px;
+	    		background-color: rgba(0, 0, 0, 0.3);
+	    		-webkit-transition: opacity 500ms;
+	    		-moz-transition: opacity 500ms;
+	    		-o-transition: opacity 500ms;
+	    		transition: opacity 500ms;
+	    		&:hover{
+	    			opacity: 1;
+	    		}
+	    		
+	    		div{
+	    			color: white;
+	    			white-space: nowrap;
+	    			display: inline-block;  
+	    			overflow: hidden;
+	    			text-overflow: ellipsis;
+	    			position: absolute;
+	    			width: 90%;
+	    			left: 5px;
+	    			bottom: 5%;
+	    		}
+	    	}
+	    }
 	}
 
 }

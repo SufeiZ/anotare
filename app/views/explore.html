@@ -15,55 +15,52 @@
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>This Week's Topic</h4>
 			<div class="arrow-group">
-				<a class="arrow prev" href="" ng-click="scrollLeft()">
-					<img src="images/left-arrow.png" style="width:15px; position:relative;"/>
-				</a>
-				<a class="arrow next" href="" ng-click="scrollRight()">
-					<img src="images/right-arrow.png" style="width:15px; position:relative;"/>
-				</a>
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
 			</div>
-			<div horizontal-infinity-scroll="loadMore()" style="overflow: auto; white-space: nowrap;">
-				<ul>
-					<li style="display: inline-block;" ng-repeat="item in items">
-						<img style="height: 200px; margin-left: 10px;" ng-src={{item.src}} />
-					</li>
-				</ul>  
+			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()">
+				<a href="" class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</a>
 			</div>
 		</div>
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>Trending</h4>
 			<div class="arrow-group">
-				<a class="arrow prev" href="" ng-click="scrollLeft()">
-					<img src="images/left-arrow.png" style="width:15px; position:relative;"/>
-				</a>
-				<a class="arrow next" href="" ng-click="scrollRight()">
-					<img src="images/right-arrow.png" style="width:15px; position:relative;"/>
-				</a>
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
 			</div>
-			<div horizontal-infinity-scroll="loadMore()" style="overflow: auto; white-space: nowrap;">
-				<ul>
-					<li style="display: inline-block;" ng-repeat="item in items">
-						<img style="height: 200px; margin-left: 10px;" ng-src={{item.src}} />
-					</li>
-				</ul>  
+			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
+				<a class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</a>
 			</div>
 		</div>
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>Favorites</h4>
 			<div class="arrow-group">
-				<a class="arrow prev" href="" ng-click="scrollLeft()">
-					<img src="images/left-arrow.png" style="width:15px; position:relative;"/>
-				</a>
-				<a class="arrow next" href="" ng-click="scrollRight()">
-					<img src="images/right-arrow.png" style="width:15px; position:relative;"/>
-				</a>
+				<span ng-mouseenter="scrollLeft()" class="prev"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/left-arrow.png"/>
+				</a></span>
+				<span ng-mouseenter="scrollRight()" class="next"><a href="" ng-mouseleave="scrollEnd()">
+					<img class="arrow" src="/images/right-arrow.png"/>
+				</a></span>
 			</div>
-			<div horizontal-infinity-scroll="loadMore()" style="overflow: auto; white-space: nowrap;">
-				<ul>
-					<li style="display: inline-block;" ng-repeat="item in items">
-						<img style="height: 200px; margin-left: 10px;" ng-src={{item.src}} />
-					</li>
-				</ul>  
+			<div class="scroll-gallery" horizontal-infinity-scroll="loadMore()" >
+				<div class="scroll-photo" ng-repeat="item in items">
+					<img ng-src={{item.src}} />
+					<span class="text-content"><div><h4>{{item.title}}</h4><h5>{{item.artist}}</h5></div></span>
+				</div>
 			</div>
 		</div>
 	</div>
