@@ -15,10 +15,10 @@
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>This Week's Topic</h4>
 			<div class="arrow-group">
-				<a href="" ng-mouseover="scrollLeft()">
+				<a href="" ng-mouseenter="scrollLeft()" ng-mouseleave="scrollEnd()">
 					<img class="arrow prev" src="/images/left-arrow.png"/>
 				</a>
-				<a href="" ng-mouseover="scrollRight()">
+				<a href="" ng-mouseenter="scrollRight()" ng-mouseleave="scrollEnd()">
 					<img class="arrow next" src="/images/right-arrow.png"/>
 				</a>
 			</div>
@@ -32,10 +32,10 @@
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>Trending</h4>
 			<div class="arrow-group">
-				<a href="" ng-mouseover="scrollLeft()">
+				<a href="" ng-mouseenter="scrollLeft()" ng-mouseleave="scrollEnd()">
 					<img class="arrow prev" src="/images/left-arrow.png"/>
 				</a>
-				<a href="" ng-mouseover="scrollRight()">
+				<a href="" ng-mouseenter="scrollRight()" ng-mouseleave="scrollEnd()">
 					<img class="arrow next" src="/images/right-arrow.png"/>
 				</a>
 			</div>
@@ -49,10 +49,10 @@
 		<div ng-controller="GalleryCtrl" class="row">
 			<h4>Favorites</h4>
 			<div class="arrow-group">
-				<a href="" ng-mouseover="scrollLeft()">
+				<a href="" ng-mouseenter="scrollLeft()" ng-mouseleave="scrollEnd()">
 					<img class="arrow prev" src="/images/left-arrow.png"/>
 				</a>
-				<a href="" ng-mouseover="scrollRight()">
+				<a href="" ng-mouseenter="scrollRight()" ng-mouseleave="scrollEnd()">
 					<img class="arrow next" src="/images/right-arrow.png"/>
 				</a>
 			</div>
