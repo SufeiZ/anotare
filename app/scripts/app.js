@@ -27,7 +27,7 @@ angular
     .state('welcome', {
       url: '/',
       templateUrl: 'views/welcome.html',
-      controller: 'AnnotationCtrl'
+      controller: 'GalleryCtrl'
     })
 
     .state('root', {
