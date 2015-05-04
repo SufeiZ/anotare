@@ -12,6 +12,8 @@
   $scope.imageScope;
   $scope.editMode = false;
   $scope.annotationText = "";
+  $scope.comments;
+
   
   $scope.toolIcons = [
   {

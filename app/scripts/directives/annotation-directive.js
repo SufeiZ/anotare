@@ -9,19 +9,14 @@ angular.module('anotareApp')
     return {
       restrict : 'E',
       replace : true,
-      template :"<div id='annotation-body'>" +  
-                  "<div class='editing-menu'>" +
-                    "<a href='' ng-click='switchEditMode()'>edit mode: {{editMode ? 'on' : 'off'}}</a>" +  
-                  "</div>" +
-                  "<canvas id='main-canvas'>" +
-                  "</canvas>" +
-                  "<span ng-bind='annotationText'></span>" +
-                "</div>",
+      templateUrl :'views/display-annotation.html',
       link: function(scope, element, attribute, event) {
         scope.editMode = false;
+        scope.viewMode = false;
+        scope.showAnnotation = false;
         scope.showDropdown = true;
         //prevent default right click function
-        window.oncontextmenu = function() { return false;};
+        // window.oncontextmenu = function() { return false;};
 
         var canvas, image, shapeLastClicked;
 
@@ -30,6 +25,10 @@ angular.module('anotareApp')
           strokeColor: new paper.Color(0.8,0.9),
           strokeWidth: 1.5,
           fillColor: new paper.Color(0,0,0,0.2)
+        };
+        var styleHide = {
+          strokeWidth: 0,
+          fillColor: null
         };
         var styleSufei = {
           strokeColor: new paper.Color(1,1,0,1),
@@ -74,7 +73,12 @@ angular.module('anotareApp')
         }
 
         scope.switchEditMode = function(){
+          if (scope.viewMode)
+          {
+            scope.switchViewMode();
+          }
           scope.editMode = !scope.editMode;
+
           if (scope.editMode){
             scope.showDropdown = true;
             scope.hideDropdown();
@@ -88,6 +92,41 @@ angular.module('anotareApp')
               shapeLastClicked.frame.remove();
             }
           }
+        }
+
+        scope.switchViewMode = function () {
+          if (scope.editMode){
+            scope.switchEditMode();
+          }
+          scope.viewMode = !scope.viewMode;
+         
+          var shapes = paper.project.getActiveLayer().children;
+          for (var i=1; i < shapes.length; i++ ){
+            if (scope.viewMode){
+              shapes[i].style = styleHide;
+            }
+            else {
+              shapes[i].style = styleStandard;
+            }
+          }
+
+          if (scope.viewMode){
+            scope.$apply(function() {
+              scope.showAnnotation = false;
+            });
+          }
+          // if (scope.viewMode){
+            
+          // }
+          // if (typeof shapeLastClicked !== 'undefined') {
+          //   if (scope.editMode) {
+          //     drawFrameOn(shapeLastClicked, 'makeNew');
+          //   }
+          //   else {
+          //     shapeLastClicked.removeSegments();
+          //     shapeLastClicked.frame.remove();
+          //   }
+          // }
         }
 
         //draw the image
@@ -114,6 +153,9 @@ angular.module('anotareApp')
           raster.onLoad = resizeRaster;
           raster.position = paper.view.center;
           raster.onClick = function(event){
+            scope.$apply(function() {
+              scope.showAnnotation = false;
+            });
             if (typeof shapeLastClicked !== 'undefined') {
               shapeLastClicked.style = styleStandard;
               shapeLastClicked.active = false;
@@ -282,7 +324,6 @@ angular.module('anotareApp')
 
         //draw shapes on the image/Raster
         scope.drawAnnotation = function( annotation ){
-
           //function closure ftw
           var mouseActionsOn = function(shape){
 
@@ -359,8 +400,10 @@ angular.module('anotareApp')
               // scope.showDropDown = true;
 
               //show the text corresponding to the shape
+              scope.showAnnotation=true;
               scope.$apply(function() {
                 scope.annotationText = shape.text;
+                scope.comments = shape.comments;
               });
 
               if (scope.editMode){
@@ -479,10 +522,12 @@ angular.module('anotareApp')
 
           //creating the frame and overriding mouse actions on every shape
           if (typeof shape !== 'undefined') {
+
             shape.type = annotation.type;
             shape.position.setX(annotation.x);
             shape.position.setY(annotation.y);
             shape.text = annotation.text;
+            shape.comments = annotation.comments;
             shape.active = false;
             mouseActionsOn(shape);
             return shape;

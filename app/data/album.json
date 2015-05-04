@@ -10,49 +10,144 @@
             "year": "1907–1907",
             "media": "Oil paint",
             "size": ["96", "92", "in"],
-            "annotations":[
-
-            				{
-            					"type":"circle",
-            					"x": 210,
-            					"y": 110,
-            					"radius": 40,
-                                "text": "Facing away, shows ignorance"
-            				},
-            				{
-            					"type":"rectangle",
-            					"x": 520,
-            					"y": 70,
-            					"height": 90,
-            					"width": 50,
-                                "text": "Represents a mask, African art's influence on Picasso's work"
-            				},
-            				{
-            					"type":"ellipse",
-            					"x": 370,
-            					"y": 490,
-            					"height": 130,
-            					"width": 90,
-                                "text": "a scything blade of melon with testicular grapes, an apple and a pear"
-            				},
-            				{
-            					"type":"circle",
-            					"x": 520,
-            					"y": 250,
-            					"radius": 60,
-                                "text": "Facing back and stares directly to the audience"
-            				},
-                            {
-                                "type":"pin",
-                                "x": 300,
-                                "y": 130,
-                                "text": "Intimidating the audience by staring"
-                            }
-            			]
+            "annotations":
+            [
+			{
+				"type":"circle",
+				"x": 210,
+				"y": 110,
+				"radius": 40,
+                "text":"Facing away, shows ignorance",
+                "comments":
+                [
+                    {
+                        "user":"Jane Doe",
+                        "text":"great annotation. now i understand better!"
+                    },
+                    {
+                        "user":"June Day",
+                        "text":"I think you dont understand what you are saying"
+                    },
+                    {
+                        "user":"Elder Cunningham",
+                        "text":"I really like how you say about that painting"
+                    },
+                    {
+                        "user":"Calter Smith",
+                        "text":"Doesn't make sense to me. I think you are just talking rubbish"
+                    }
+                ]
+			},
+			{
+				"type":"rectangle",
+				"x": 520,
+				"y": 70,
+				"height": 90,
+				"width": 50,
+                "text": "Represents a mask, African art's influence on Picasso's work",
+                "comments":
+                [
+                    {
+                        "user":"Kane Toe",
+                        "text":"bad text. wont read again. i am sick of reading this"
+                    },
+                    {
+                        "user":"Juke Say",
+                        "text":"Wow! very insightful, but you are a little bit inaccurate"
+                    },
+                    {
+                        "user":"Elder Price",
+                        "text":"I think I want to go to the market."
+                    },
+                    {
+                        "user":"Calter Samsonian",
+                        "text":"Totally make sense! Lorem Ipsum!!!"
+                    }
+                ]
+			},
+			{
+				"type":"ellipse",
+				"x": 370,
+				"y": 490,
+				"height": 130,
+				"width": 90,
+                "text": "a scything blade of melon with testicular grapes, an apple and a pear",
+                "comments":
+                [
+                    {
+                        "user":"Jane Donworryboutathing",
+                        "text":"great annotation. now i understand better!"
+                    },
+                    {
+                        "user":"June Day",
+                        "text":"I think you dont understand what you are saying"
+                    },
+                    {
+                        "user":"Elder Cunningham",
+                        "text":"I really like how you say about that painting"
+                    },
+                    {
+                        "user":"Calter Smith",
+                        "text":"Doesn't make sense to me. I think you are just talking rubbish"
+                    }
+                ]
+			},
+			{
+				"type":"circle",
+				"x": 520,
+				"y": 250,
+				"radius": 60,
+                "text": "Facing back and stares directly to the audience",
+                "comments":
+                [
+                    {
+                        "user":"Jane Doe",
+                        "text":"great annotation. now i understand better!"
+                    },
+                    {
+                        "user":"June Day",
+                        "text":"I think you dont understand what you are saying"
+                    },
+                    {
+                        "user":"Elder Cunningham",
+                        "text":"I really like how you say about that painting"
+                    },
+                    {
+                        "user":"Calter Smith",
+                        "text":"Doesn't make sense to me. I think you are just talking rubbish"
+                    }
+                ]
+			},
+            {
+                "type":"pin",
+                "x": 300,
+                "y": 130,
+                "text": "Intimidating the audience by staring",
+                "comments":
+                [
+                    {
+                        "user":"Jane Doe",
+                        "text":"great annotation. now i understand better!"
+                    },
+                    {
+                        "user":"June Day",
+                        "text":"I think you dont understand what you are saying"
+                    },
+                    {
+                        "user":"Elder Cunningham",
+                        "text":"I really like how you say about that painting"
+                    },
+                    {
+                        "user":"Calter Smith",
+                        "text":"Doesn't make sense to me. I think you are just talking rubbish"
+                    }
+                ]
+            }
+            ]
         },
         {
             "src": "images/photo1.jpg",
-            "title": "",
+            "title": "Birds and mountains",
             "artist": "René Reichelt",
             "location": "",
             "period": "",
@@ -63,8 +158,8 @@
         },
         {
             "src": "images/photo2.jpg",
-            "title": "",
-            "artist": "",
+            "title": "Mountain and skies",
+            "artist": "Jane Doe",
             "location": "",
             "period": "",
             "year": "",
@@ -74,10 +169,24 @@
         },
         {
             "src": "images/photo3.jpg",
+            "title": "Blue white stroke",
+            "artist": "John Smith",
+            "location": "",
+            "period": "",
+            "year": "",
+            "media": "",
+            "size": [],
             "annotations":[]
         },
         {
             "src": "images/photo4.jpg",
+            "title": "Scuba in the deep",
+            "artist": "Bob Carter",
+            "location": "",
+            "period": "",
+            "year": "",
+            "media": "",
+            "size": [],
             "annotations":[]
         },
         {

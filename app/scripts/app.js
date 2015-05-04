@@ -29,6 +29,11 @@ angular
       templateUrl: 'views/welcome.html',
       controller: 'GalleryCtrl'
     })
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'views/signup.html',
+      controller: 'GalleryCtrl'
+  })
 
     .state('root', {
       url: '/main',
@@ -36,6 +41,7 @@ angular
       controller: 'AnnotationCtrl'
 
     })
+
       .state('root.explore', {
         url: '/explore',
         templateUrl: 'views/explore.html',
