@@ -1,5 +1,6 @@
-<div id='annotation-body' class='container'>
+<div id='annotation-body' class='container-fluid'>
     <div class='row'>
+        <!-- <div style="float:left"> -->
     	<div class='col-md-1'>
 	        <a href='' ng-click='switchViewMode()' >
 	    		<div class="button-round {{viewMode ? 'button-active' : 'button-inactive'}}">
@@ -14,12 +15,14 @@
 	        </a>
 
         </div>
+        <!-- <div id="canvas-column"> -->
         <div class='col-md-7' id="canvas-column">
         	<canvas id='main-canvas'></canvas>
-        	<!-- <div id="canvas-description">
+        	<div id="canvas-description">
         		Les Demoiselles d'Avignon - Pablo Picasso
-        	</div> -->
+        	</div>
         </div>
+        <!-- <div id="annotation-column" style="float:right" ng-show="showAnnotation"> -->
         <div id="annotation-column" class='col-md-4' ng-show="showAnnotation">
             <div id="annotation-header">annotation</div>
             <hr align="right" width="100%" color='black'>
