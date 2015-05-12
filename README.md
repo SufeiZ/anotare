@@ -1,6 +1,6 @@
 ## Synopsis
 
-Combing visual artwork with modern technology, Anotare implements an annotating feature next to the art that helps users make sense of it.
+Combing visual artwork with modern technology, Anotare implements an annotating feature next to the art that helps users make sense of it. (currently best viewed on MacBook 13 inch)
 
 ```
 homepage: http://sufeizhang.me/anotare/#
@@ -22,12 +22,12 @@ Helps art students and enthusiast collaborate on annotating artworks.
 
 ## Installation
 
-Ruby, Compass, npm, bower, and grunt must be installed beforehand. The website is built using AngularJS and is using Yeoman scaffolding tool. After fork/cloning the repository, inside the project folder, run:
+Ruby, Compass, npm, bower, and grunt must be installed beforehand. The website is built using AngularJS and is using Yeoman scaffolding tool. After fork/cloning the repository, to install all the dependencies of this project, inside the project folder, run:
 ```
 npm install
 bower install
 ```
-to install all the dependencies of this project. To see live changes, run:
+To see live changes when editing, run:
 ```
 grunt serve
 ```
