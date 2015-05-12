@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @ngdoc function
- * @name anotare.directive:display-annotation
+ * @name anotare.directive:drop-tool
  */
 
  angular.module('anotareApp')
@@ -15,8 +15,8 @@
       var $dropdown = $("#dropdown-context");
       var confirmDraw = false;
       var isNewShape;
-      // scope.newText = "";
-      // console.log(scope.paper);
+
+      // draw the dropdown menu where the mouse is clicked
       scope.drawDropdown = function(ev, shape){
         $dropdown.css({
           top: ev.event.y + "px", 
@@ -25,6 +25,7 @@
           zIndex: 1001
         });
 
+        // if the mouse is clicked not on shape (on raster)
         if (typeof shape === 'undefined'){
           isNewShape = true;
            newAnnotation = {
@@ -38,7 +39,7 @@
             scope.annotationText = newShape.text;
           });
         }
-        else {
+        else { //if the mouse is clicked on the shape
           isNewShape = false;
           newShape = shape;
           oldShape = shape;
@@ -47,13 +48,14 @@
         }
       };
 
+      // hide the dropdown menu
       scope.hideDropdown = function(){
         $dropdown.css({
           display: "none"
         });
+
         if (!confirmDraw && isNewShape && typeof newShape !== 'undefined'){
           newShape.remove();
-          
         }
         else {
           //shape has been drawn, reset confirmDraw and newShape
@@ -62,6 +64,7 @@
         }
       };
 
+      // when submit is clicked on the drop down meny
       scope.submitNewAnnotation = function() {
         //check if the fieldtext is not empty
         if (scope.newText.trim() !== ""){
@@ -80,6 +83,7 @@
         scope.showDropdown = true;
       }
 
+      // when clicking the shapes on the dropdown menu
       scope.dropdownClick = function(index){
         var origX = newShape.position.x;
         var origY = newShape.position.y;

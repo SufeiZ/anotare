@@ -15,10 +15,23 @@ angular.module('anotareApp')
         scope.viewMode = false;
         scope.showAnnotation = false;
         scope.showDropdown = true;
+
         //prevent default right click function
-        // window.oncontextmenu = function() { return false;};
+        window.oncontextmenu = function() { return false;};
 
         var canvas, image, shapeLastClicked;
+
+        // initialize the page
+        var init = function() {
+          canvas = document.getElementById("main-canvas");
+          canvas.setAttribute("width", screen.availWidth*.55);
+          canvas.setAttribute("height", screen.availHeight*.75);
+
+          paper.setup(canvas);
+          scope.paper = paper;
+          //ajax http get method to get image object from database
+          scope.getImage();
+        }
 
         //global styles to be used on the shapes
         var styleStandard = {
@@ -60,29 +73,25 @@ angular.module('anotareApp')
           strokeWidth: 0.3
         };
 
-        
-        var init = function() {
-          canvas = document.getElementById("main-canvas");
-          canvas.setAttribute("width", screen.availWidth*.55);
-          canvas.setAttribute("height", screen.availHeight*.75);
 
-          paper.setup(canvas);
-          scope.paper = paper;
-          //ajax http get method to get image object from database
-          scope.getImage();
-        }
-
+        // turn on/off edit mode        
         scope.switchEditMode = function(){
+
+          // turn off view mode if it is on
           if (scope.viewMode)
           {
             scope.switchViewMode();
           }
+
           scope.editMode = !scope.editMode;
 
+          // show dropdown to edit shapes
           if (scope.editMode){
             scope.showDropdown = true;
             scope.hideDropdown();
           }
+
+          // draw frame boundary for shape last clicked
           if (typeof shapeLastClicked !== 'undefined') {
             if (scope.editMode) {
               drawFrameOn(shapeLastClicked, 'makeNew');
@@ -94,13 +103,20 @@ angular.module('anotareApp')
           }
         }
 
+        // turn on/off view mode
         scope.switchViewMode = function () {
+
+          // turn off edit mode if it is on
           if (scope.editMode){
             scope.switchEditMode();
           }
+
           scope.viewMode = !scope.viewMode;
-         
+          
+          // get array of shapes
           var shapes = paper.project.getActiveLayer().children;
+
+          // hide the shapes if view mode is one
           for (var i=1; i < shapes.length; i++ ){
             if (scope.viewMode){
               shapes[i].style = styleHide;
@@ -110,23 +126,12 @@ angular.module('anotareApp')
             }
           }
 
+          //hide annotation
           if (scope.viewMode){
             scope.$apply(function() {
               scope.showAnnotation = false;
             });
           }
-          // if (scope.viewMode){
-            
-          // }
-          // if (typeof shapeLastClicked !== 'undefined') {
-          //   if (scope.editMode) {
-          //     drawFrameOn(shapeLastClicked, 'makeNew');
-          //   }
-          //   else {
-          //     shapeLastClicked.removeSegments();
-          //     shapeLastClicked.frame.remove();
-          //   }
-          // }
         }
 
         //draw the image
@@ -148,14 +153,20 @@ angular.module('anotareApp')
             }
           }
 
+          // initialize raster
           var raster = new paper.Raster(image.src);
           raster.type = 'main-image';
           raster.onLoad = resizeRaster;
           raster.position = paper.view.center;
+
           raster.onClick = function(event){
+
+            //hide annotation
             scope.$apply(function() {
               scope.showAnnotation = false;
             });
+
+            // if raster is clicked, turn shapes into style standard
             if (typeof shapeLastClicked !== 'undefined') {
               shapeLastClicked.style = styleStandard;
               shapeLastClicked.active = false;
@@ -165,9 +176,10 @@ angular.module('anotareApp')
               }
             }
 
+            // when showdropdown is true, a click on raster hides the dropdown
+            // when show dropdown is false, a click on raster shows the dropdown
             if (scope.editMode) {
               if (scope.showDropdown){
-              // console.log(scope.dropDownMenu);
                 scope.drawDropdown(event);
                 scope.showDropdown = false;
               }
@@ -179,26 +191,27 @@ angular.module('anotareApp')
         }
       }
 
+        // find angle for rotation of shape
+        // TODO: detect when it is counterclockwise rotation
         var findAngle = function (centerPoint, rotatePoint, eventPoint ){
+
+          // find distance between 2 points
           var findDistance = function(point1, point2){
             return ( (point1.x-point2.x)*(point1.x-point2.x) + (point1.y-point2.y)*(point1.y-point2.y) );
           }
+
           var centerToRotate = findDistance(centerPoint, rotatePoint);
           var centerToEvent = findDistance(centerPoint, eventPoint);
           var rotateToEvent = findDistance(rotatePoint, eventPoint);
 
           var angle = Math.acos((centerToRotate + centerToEvent - rotateToEvent)/ (2 * Math.sqrt(centerToRotate) * Math.sqrt(centerToEvent) ) ) * 180 / Math.PI;
           return angle;
-          // if (eventPoint.x < rotatePoint.x t)
         }
 
+        // draw boundary frame on shapes
         var drawFrameOn = function(shape, updateType){
-            // shape.bounds.selected = true; 
-            // console.log(shape.bounds);
-                    // console.log(b);
-            // b.selected = true;
-    
-            // selectionRectangle = new Path.Rectangle(b);
+
+            // draw rectangle path around shape
             var drawPath = function(shape){
               var b = shape.bounds.clone().expand(5,5);
               shape.frame = new paper.Path.Rectangle(b);
@@ -208,12 +221,12 @@ angular.module('anotareApp')
               shape.frame.insert(2, new paper.Point(b.center.x, b.top-15));
               shape.frame.insert(2, new paper.Point(b.center.x, b.top));
             }
-            // shape.frame.selected = true;
-            // shape.frame.topLeft.onMouseEnter = function() {
-            //   console.log("i am zero");
-            // };
 
+            // draw little squares on the corners
+            // these segments, when dragged resize the shapes
+            // except rotate segment is dragged, it rotates the shape
             var drawSegments = function(shape) {
+
               shape.frame.bottomLeftSegment = new paper.Path.Rectangle({
                 x: shape.frame.segments[0].point.x - 2.5,
                 y: shape.frame.segments[0].point.y - 2.5,
@@ -227,6 +240,7 @@ angular.module('anotareApp')
                   drawFrameOn(shape, 'updateAll');
                 }
               });
+
               shape.frame.topLeftSegment = new paper.Path.Rectangle({
                 x: shape.frame.segments[1].point.x - 2.5,
                 y: shape.frame.segments[1].point.y - 2.5,
@@ -240,6 +254,7 @@ angular.module('anotareApp')
                   drawFrameOn(shape, 'updateAll');
                 }
               });
+
               shape.frame.topRightSegment = new paper.Path.Rectangle({
                 x: shape.frame.segments[5].point.x - 2.5,
                 y: shape.frame.segments[5].point.y - 2.5,
@@ -253,6 +268,7 @@ angular.module('anotareApp')
                   drawFrameOn(shape, 'updateAll');
                 }
               });
+
               shape.frame.bottomRightSegment = new paper.Path.Rectangle({
                 x: shape.frame.segments[6].point.x - 2.5,
                 y: shape.frame.segments[6].point.y - 2.5,
@@ -266,7 +282,7 @@ angular.module('anotareApp')
                   drawFrameOn(shape, 'updateAll');
                 }
               });
-              // var rotateAngle = 0;
+
               shape.frame.rotateSegment = new paper.Path.Rectangle({
                 x: shape.frame.segments[3].point.x - 2.5,
                 y: shape.frame.segments[3].point.y - 2.5,
@@ -276,14 +292,9 @@ angular.module('anotareApp')
                 strokeColor: 'blue',
                 strokeWidth: 1,
                 onMouseDrag : function(event){
-                  // console.log(shape.bounds.center);
                   var rotateAngle=findAngle(shape.bounds.center, shape.frame.segments[3].point, event.point);
-                  // if (shape.frame.topRightSegment.x < shape.frame.top
-                  // console.log("drag");
-                  // console.log(rotateAngle);
                   shape.rotate(rotateAngle);
                   shape.frame.rotate(rotateAngle);
-
                   drawFrameOn(shape, 'updateSegments');
                   shape.frame.bottomRightSegment.rotate(rotateAngle);
                   shape.frame.bottomLeftSegment.rotate(rotateAngle);
@@ -294,6 +305,7 @@ angular.module('anotareApp')
               });
             }
 
+            // remove the segments (little squares on the boundary frame)
             var removeSegments = function (){
               shape.frame.bottomLeftSegment.remove();
               shape.frame.bottomRightSegment.remove();
@@ -302,6 +314,10 @@ angular.module('anotareApp')
               shape.frame.rotateSegment.remove();
             }
 
+
+            // API of the function, makeNew draw new shape with the segments
+            // updateAll remove the old shape and boundary, then draw new one
+            // updateSegments only update the boundary frame and segments
             shape.removeSegments = removeSegments;
 
             if (updateType === 'makeNew'){
@@ -324,9 +340,9 @@ angular.module('anotareApp')
 
         //draw shapes on the image/Raster
         scope.drawAnnotation = function( annotation ){
-          //function closure ftw
-          var mouseActionsOn = function(shape){
 
+          // mouse actions to be applied on shapes
+          var mouseActionsOn = function(shape){
             //hover effect
             var mouseEnterEffect = function(shape){
               $('html,body').css('cursor','pointer');
@@ -364,18 +380,14 @@ angular.module('anotareApp')
               }
 
               if (scope.editMode && dragBound(event.point,shape)){
-                // console.log(shape.frame);
                 shape.position = event.point;
                 drawFrameOn(shape, 'updateAll');
-                // shape.frame.updateFramePosition();
               }
             }
 
             //give an active effect when shape is clicked, show frame only when editMode is true
             //shapeLastClicked is a 'global' variable to determine which shape was last clicked
             var mouseClickEffect = function(event, shape) {
-              // console.log(event.event.which);
-              // event.preventDefault();
               if (typeof shapeLastClicked !== 'undefined' && shapeLastClicked !== shape ){
                 if (shapeLastClicked.type === 'pin') {
                     shapeLastClicked.style = stylePin;
@@ -387,7 +399,6 @@ angular.module('anotareApp')
                 if (scope.editMode){
                   shapeLastClicked.removeSegments();
                   shapeLastClicked.frame.remove();
-                  // shapeLastClicked.frame.toggleVisibility(false);
                 }
               }
               shapeLastClicked = shape;
@@ -397,7 +408,6 @@ angular.module('anotareApp')
               shape.style = styleActive;
               scope.hideDropdown();
               scope.showDropdown = false;
-              // scope.showDropDown = true;
 
               //show the text corresponding to the shape
               scope.showAnnotation=true;
@@ -417,29 +427,18 @@ angular.module('anotareApp')
                   drawFrameOn(shape, 'updateAll');
                 }
               }
-              // return false;
             }
-
-            // var mouseRightClickEffect = function(event, shape) {
-            //   console.log("rightclick");
-            //   mouseLeftClickEffect(event, shape);
-            //   if (scope.editMode){
-            //     scope.drawDropdown(event, shape);
-            //   }
-            // }
-            // console.log(shape);
 
             //override the mouse actions of shape
             shape.onMouseDrag   = function(event) { mouseDragEffect  ( event, shape ) };
             shape.onMouseEnter  = function() { mouseEnterEffect ( shape ) };
             shape.onMouseLeave  = function() { mouseLeaveEffect ( shape ) };
             shape.onClick       = function(event) {mouseClickEffect ( event, shape); return false;}
-            // shape.oncontextmenu = function(event) { mouseRightClickEffect ( event, shape) };
 
           };
           //end mouseActionsOn
 
-
+          // draw circle
           var drawCircle = function( shape ){
             var circle;
             if (typeof shape.radius === 'undefined'){
@@ -457,6 +456,7 @@ angular.module('anotareApp')
             return circle;
           };
 
+          // draw rectangle
           var drawRect = function( shape ){
             var rect;
             if (typeof shape.width === 'undefined' || typeof shape.height === 'undefined'){
@@ -476,6 +476,7 @@ angular.module('anotareApp')
             return rect;
           };
 
+          // draw ellipse
           var drawEllipse = function( shape ){
             var ellipse;
             if (typeof shape.width === 'undefined' || typeof shape.height === 'undefined'){
@@ -495,6 +496,7 @@ angular.module('anotareApp')
             return ellipse;
           };
 
+          //draw pin
           var drawPin = function( shape ){
             var pin = new paper.Path.Circle({
               radius: 3,
@@ -502,7 +504,6 @@ angular.module('anotareApp')
             });
             return pin;
           };
-
 
           //draw every annotation from annotations
           var shape;
@@ -532,8 +533,7 @@ angular.module('anotareApp')
             mouseActionsOn(shape);
             return shape;
           }
-          //shape is unidentified
-          else{
+          else { //shape is unidentified
             console.log('Shape' + annotation.type + 'is unidentified');
           }
 

@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @ngdoc function
- * @name anotare.directive:display-annotation
+ * @name anotare.directive:photo-slider
  */
 
 angular.module('anotareApp')
@@ -16,7 +16,6 @@ angular.module('anotareApp')
                 for (var i = 1; i < 5; i++) {
                     scope.items.push(scope.imageScope[i]);
                     scope.items[i-1].visible = false;
-                    // lastImageIndex++;
                 }
                 scope.items[scope.currentIndex].visible = true;
             };
@@ -69,6 +68,7 @@ angular.module('anotareApp')
             });
 
             scope.getImage();
+            //animation to change the pictures
             $interval(scope.next, 5000);
 
         }
