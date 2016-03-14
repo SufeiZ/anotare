@@ -48,4 +48,5 @@
           console.log("Failed to get the image, result is " + result.toString()); 
         });
     };
+    
   });

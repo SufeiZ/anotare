@@ -143,9 +143,9 @@ angular.module('anotareApp')
             var rasterWidth = this.getWidth();
             var scale = Math.max(rasterHeight/canvas.height, rasterWidth/canvas.width);
 
-            if (scale <= 1) {
-              this.setHeight(rasterHeight * scale);
-              this.setWidth(rasterWidth * scale);
+            if (true) {
+              // this.setHeight(rasterHeight * scale);
+              // this.setWidth(rasterWidth * scale);
             }
             else {
               this.setHeight(rasterHeight / scale);
